@@ -5,7 +5,7 @@ namespace FinalLaboratorioII.entidades
     {
         private int id_localidad { get; set; }
         private int id_provincia {  get; set; }
-        private string localidad {  get; set; }
+        private string nombreLocalidad {  get; set; }
 
         public Localidad()
         {
@@ -16,7 +16,23 @@ namespace FinalLaboratorioII.entidades
         {
             this.id_localidad = id_localidad;
             this.id_provincia = id_provincia;
-            this.localidad = localidad ?? throw new ArgumentNullException(nameof(localidad));
+            this.nombreLocalidad = localidad ?? throw new ArgumentNullException(nameof(localidad));
+        }
+
+
+        public int Id_localidad
+        {
+            get { return id_localidad;}set { id_localidad = value; }
+        }
+
+        public int Id_provincia
+        {
+            get { return id_provincia;} set { id_provincia = value;}
+        }
+
+        public string NombreLocalidad
+        {
+            get { return nombreLocalidad; }set { nombreLocalidad = value; }
         }
     }
 }

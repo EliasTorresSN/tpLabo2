@@ -5,17 +5,22 @@ namespace FinalLaboratorioII.entidades
     internal class Marca
     {
         private int id_marca {  get; set; }
-        private string marca {  get; set; }
+        private string nombreMarca {  get; set; }
 
         public Marca()
         {
 
         }
 
-        public Marca(int id_provincia, string provincia)
+        public Marca(int id_marca, string nombreMarca)
         {
             this.id_marca = id_marca;
-            this.marca = marca ?? throw new ArgumentNullException(nameof(marca));
+            this.nombreMarca = nombreMarca ?? throw new ArgumentNullException(nameof(nombreMarca));
+        }
+         
+        public string NombreMarca
+        {
+            get { return this.nombreMarca; }set { this.nombreMarca = value;}
         }
     }
 }

@@ -1,0 +1,14 @@
+D:\FinalLaboratorioII\FinalLaboratorioII\bin\Debug\net6.0\FinalLaboratorioII.exe
+D:\FinalLaboratorioII\FinalLaboratorioII\bin\Debug\net6.0\FinalLaboratorioII.deps.json
+D:\FinalLaboratorioII\FinalLaboratorioII\bin\Debug\net6.0\FinalLaboratorioII.runtimeconfig.json
+D:\FinalLaboratorioII\FinalLaboratorioII\bin\Debug\net6.0\FinalLaboratorioII.dll
+D:\FinalLaboratorioII\FinalLaboratorioII\bin\Debug\net6.0\FinalLaboratorioII.pdb
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\FinalLaboratorioII.GeneratedMSBuildEditorConfig.editorconfig
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\FinalLaboratorioII.AssemblyInfoInputs.cache
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\FinalLaboratorioII.AssemblyInfo.cs
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\FinalLaboratorioII.csproj.CoreCompileInputs.cache
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\FinalLaboratorioII.dll
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\refint\FinalLaboratorioII.dll
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\FinalLaboratorioII.pdb
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\FinalLaboratorioII.genruntimeconfig.cache
+D:\FinalLaboratorioII\FinalLaboratorioII\obj\Debug\net6.0\ref\FinalLaboratorioII.dll
