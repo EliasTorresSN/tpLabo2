@@ -24,37 +24,20 @@ namespace FinalLaboratorioII.entidades
         public Vehiculo(int id_vehiculo, string patente, string kilometros, string anio, int id_marca, string modelo, int id_segmento, int id_combustible, double precio_vta, string observaciones)
         {
             this.id_vehiculo = id_vehiculo;
-            this.patente = patente ?? throw new ArgumentNullException(nameof(patente));
-            this.kilometros = kilometros ?? throw new ArgumentNullException(nameof(kilometros));
-            this.anio = anio ?? throw new ArgumentNullException(nameof(anio));
             this.id_marca = id_marca;
             this.modelo = modelo ?? throw new ArgumentNullException(nameof(modelo));
+            this.anio = anio ?? throw new ArgumentNullException(nameof(anio));
+            this.kilometros = kilometros ?? throw new ArgumentNullException(nameof(kilometros));
+            this.patente = patente ?? throw new ArgumentNullException(nameof(patente));
             this.id_segmento = id_segmento;
             this.id_combustible = id_combustible;
-            this.precio_vta = precio_vta;
             this.observaciones = observaciones ?? throw new ArgumentNullException(nameof(observaciones));
+            this.precio_vta = precio_vta;
         }
-
-
 
         public int Id_vehiculo
         {
             get {  return this.id_vehiculo;} set { this.id_vehiculo = value; }
-        }
-
-        public string Patente
-        {
-            get { return this.patente; } set { this.patente = value; }
-        }
-
-        public string Kilometros
-        {
-            get { return this.kilometros;}set { this.kilometros = value;}
-        }
-        public  string Anio
-        {
-            get { return this.anio; }
-            set { this.anio = value; }
         }
         public int Id_marca
         {
@@ -64,6 +47,19 @@ namespace FinalLaboratorioII.entidades
         public string Modelo
         {
             get { return this.modelo; } set { this.modelo = value; }
+        }
+        public  string Anio
+        {
+            get { return this.anio; }
+            set { this.anio = value; }
+        }
+        public string Kilometros
+        {
+            get { return this.kilometros;}set { this.kilometros = value;}
+        }
+        public string Patente
+        {
+            get { return this.patente; } set { this.patente = value; }
         }
         public int Id_segmento
         {
@@ -75,18 +71,22 @@ namespace FinalLaboratorioII.entidades
             get { return this.id_combustible; }
             set { this.id_combustible = value; }
         }
-        public double Precio_vta
-        {
-            get { return this.precio_vta; }
-            set { this.precio_vta = value; }
-        }
         public string Observaciones
         {
             get { return this.observaciones; }
             set { this.observaciones = value;}
         }
+        public double Precio_vta
+        {
+            get { return this.precio_vta; }
+            set { this.precio_vta = value; }
+        }
 
-
+        public override string ToString()
+        {
+            return $"ID: {id_vehiculo} ID Marca: {id_marca} Modelo: {modelo} Anio: {anio} Kilometros: {kilometros} Patente: {patente} ID Segmento: {id_segmento} ID Combustible: {id_combustible}" +
+                $"Observaciones: {observaciones} Precio-Venta: {precio_vta}";
+        }
 
     }
 }

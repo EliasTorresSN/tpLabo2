@@ -22,5 +22,13 @@ namespace FinalLaboratorioII.entidades
         {
             get { return this.nombreMarca; }set { this.nombreMarca = value;}
         }
+
+
+
+
+
+
+
+
     }
 }
