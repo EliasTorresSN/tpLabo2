@@ -18,26 +18,64 @@ namespace FinalLaboratorioII.servicios
 
         public Vehiculo crearVehiculo()
         {
+            List<string> lista = cargarArchivoEnLista("listaVehiculo.txt");
             Vehiculo vehiculo1 = new Vehiculo();
             Console.WriteLine("Nuevo vehículo");
-            Console.WriteLine("Ingrese patente");
-            vehiculo1.Patente = Console.ReadLine();
-            Console.WriteLine("Cantidad de kilometros");
-            vehiculo1.Kilometros = Console.ReadLine();
-            Console.WriteLine("Año");
-            vehiculo1.Anio = Console.ReadLine();
+            vehiculo1.Id_vehiculo = lista.Count + 1;
+
             Console.WriteLine("id_marca");
+            vehiculo1.Id_marca = 1;
+
             Console.WriteLine("Modelo:");
             vehiculo1.Modelo = Console.ReadLine();
+
+            Console.WriteLine("Año");
+            vehiculo1.Anio = Console.ReadLine();
+
+            Console.WriteLine("Ingrese patente");
+            vehiculo1.Patente = Console.ReadLine();
+
+            Console.WriteLine("Cantidad de kilometros");
+            vehiculo1.Kilometros = Console.ReadLine();
+                      
+            
             Console.WriteLine("id_segmento");
+            vehiculo1.Id_segmento = 1;
+
             Console.WriteLine("id_combustible");
-            Console.WriteLine("Precio:");
-            vehiculo1.Precio_vta = float.Parse(Console.ReadLine());
+            vehiculo1.Id_combustible = 1;
+
             Console.WriteLine("Observaciones:");
             vehiculo1.Observaciones = Console.ReadLine();
 
+            Console.WriteLine("Precio:");
+            vehiculo1.Precio_vta = float.Parse(Console.ReadLine());
+
             return vehiculo1;
         }
+
+
+       public List<string> cargarVehiculoEnLista()
+       {
+            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
+            Vehiculo v = crearVehiculo();
+            lista.Add($"ID: {v.Id_vehiculo} ID_MARCA: {v.Id_marca} Modelo: {v.Modelo} Año: {v.Anio} Patente: {v.Patente} Kilometros: {v.Kilometros}" +
+                $" ID_Segmento: {v.Id_segmento} ID_Combustible: {v.Id_combustible} Observaciones: {v.Observaciones} Precio: ${v.Precio_vta}");
+            return lista;
+       }
+
+        public void  cargarListaEnArchivo(List<string>lista)
+        {
+            FileStream _archivo = new FileStream("listaVehiculos.txt", FileMode.Open);
+            StreamWriter writer = new StreamWriter(_archivo);
+
+
+            _archivo.Close();
+            writer.Close();
+            
+        }
+
+
 
         public void mostrarVehiculos(string _ruta)
         {
@@ -166,7 +204,7 @@ namespace FinalLaboratorioII.servicios
 
         }
 
-
+        
 
     }
 }
