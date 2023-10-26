@@ -85,7 +85,7 @@ namespace FinalLaboratorioII.entidades
         public override string ToString()
         {
             return $"ID: {id_vehiculo} ID Marca: {id_marca} Modelo: {modelo} Anio: {anio} Kilometros: {kilometros} Patente: {patente} ID Segmento: {id_segmento} ID Combustible: {id_combustible}" +
-                $"Observaciones: {observaciones} Precio-Venta: {precio_vta}";
+                $" Observaciones: {observaciones} Precio-Venta: {precio_vta}";
         }
 
     }

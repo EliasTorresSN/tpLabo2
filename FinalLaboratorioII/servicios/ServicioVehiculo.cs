@@ -10,20 +10,25 @@ namespace FinalLaboratorioII.servicios
 {
     internal class ServicioVehiculo
     {
-
         public ServicioVehiculo()
         {
-
         }
-
         public Vehiculo crearVehiculo()
         {
-            List<string> lista = cargarArchivoEnLista("listaVehiculo.txt");
+            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
             Vehiculo vehiculo1 = new Vehiculo();
             Console.WriteLine("Nuevo vehículo");
-            vehiculo1.Id_vehiculo = lista.Count + 1;
+            if (lista.Count==0)
+            {
+                vehiculo1.Id_vehiculo = 1;
+            }
+            else
+            {
 
-            Console.WriteLine("id_marca");
+            vehiculo1.Id_vehiculo = (int.Parse(lista[lista.Count - 1].Substring(4,2))) + 1;
+            }
+
+            //Console.WriteLine("id_marca");
             vehiculo1.Id_marca = 1;
 
             Console.WriteLine("Modelo:");
@@ -39,10 +44,10 @@ namespace FinalLaboratorioII.servicios
             vehiculo1.Kilometros = Console.ReadLine();
                       
             
-            Console.WriteLine("id_segmento");
+            //Console.WriteLine("id_segmento");
             vehiculo1.Id_segmento = 1;
 
-            Console.WriteLine("id_combustible");
+            //Console.WriteLine("id_combustible");
             vehiculo1.Id_combustible = 1;
 
             Console.WriteLine("Observaciones:");
@@ -53,30 +58,26 @@ namespace FinalLaboratorioII.servicios
 
             return vehiculo1;
         }
-
-
-       public List<string> cargarVehiculoEnLista()
-       {
+        public List<string> cargarVehiculoEnLista()
+        {
             List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
             Vehiculo v = crearVehiculo();
-            lista.Add($"ID: {v.Id_vehiculo} ID_MARCA: {v.Id_marca} Modelo: {v.Modelo} Año: {v.Anio} Patente: {v.Patente} Kilometros: {v.Kilometros}" +
-                $" ID_Segmento: {v.Id_segmento} ID_Combustible: {v.Id_combustible} Observaciones: {v.Observaciones} Precio: ${v.Precio_vta}");
+            lista.Add(v.ToString());
             return lista;
-       }
-
+        }
         public void  cargarListaEnArchivo(List<string>lista)
         {
             FileStream _archivo = new FileStream("listaVehiculos.txt", FileMode.Open);
-            StreamWriter writer = new StreamWriter(_archivo);
 
-
+            using (StreamWriter writer = new StreamWriter(_archivo))
+            {
+                foreach (string item in lista)
+                {
+                    writer.WriteLine(item);
+                }
+            }
             _archivo.Close();
-            writer.Close();
-            
         }
-
-
-
         public void mostrarVehiculos(string _ruta)
         {
             List<string>lista = cargarArchivoEnLista(_ruta);
@@ -85,7 +86,6 @@ namespace FinalLaboratorioII.servicios
                 Console.WriteLine(item);
             }
         }
-       
         public void actualizarVehiculo(int _id,string _ruta)
         {
             int cont = 0;
@@ -122,7 +122,6 @@ namespace FinalLaboratorioII.servicios
             }
           
         }
-
         public List<string> cargarArchivoEnLista(string _ruta)
         {
             FileStream _archivo = new FileStream(_ruta, FileMode.Open);
@@ -136,6 +135,60 @@ namespace FinalLaboratorioII.servicios
             reader.Close();
             _archivo.Close();
             return lista;
+        }
+
+        public void eliminarVehiculo()
+        {
+            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
+
+            Console.CursorVisible = false;
+            int selectedOption = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                for (int i = 0; i < lista.Count; i++)
+                {
+                    if (i == selectedOption)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(lista[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        selectedOption = Math.Max(0, selectedOption - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        selectedOption = Math.Min(lista.Count - 1, selectedOption + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                       
+                        // Realiza alguna acción según la opción seleccionada.
+                        Console.Clear();
+                        Console.WriteLine($"Seleccionaste: {lista[selectedOption].Substring(0,6)}");
+                        Console.WriteLine("Eliminar?");
+                        string res = Console.ReadLine();
+                        if (res=="si")
+                        {
+                            lista.RemoveAt(selectedOption);
+                            Console.WriteLine("vehiculo eliminado");
+                           
+                        }
+                        FileStream archivoNuevo = new FileStream("listaVehiculos.txt", FileMode.Create);
+                        archivoNuevo.Close();
+                        cargarListaEnArchivo(lista);
+                        Console.ReadKey();
+                        break;
+                }
+            }
+
         }
 
         public void menuVehiculos() {
@@ -171,11 +224,17 @@ namespace FinalLaboratorioII.servicios
                     case ConsoleKey.Enter:
                         if (selectedOption == 0)
                         {
-                            crearVehiculo();
+                            List<string> listaVehiculos = cargarVehiculoEnLista();
+                            cargarListaEnArchivo(listaVehiculos);
                         }
                         else if (selectedOption == 1)
                         {
                             mostrarVehiculos("listaVehiculos.txt");
+                            Console.ReadKey();
+                        }
+                        else if (selectedOption == 2)
+                        {
+                           eliminarVehiculo();
                             Console.ReadKey();
                         }
                         else if (selectedOption == options.Length - 1)

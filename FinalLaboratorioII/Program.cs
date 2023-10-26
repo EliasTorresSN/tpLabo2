@@ -10,16 +10,9 @@ namespace FinalLaboratorioII
         static void Main(string[] args)
         {
             ServicioVehiculo sv = new ServicioVehiculo();
-            ////sv.mostrarVehiculos("listaVehiculos.txt");
-            //sv.actualizarVehiculo(10,"listaVehiculos.txt");
+            //List<string> listaVehiculos = sv.cargarVehiculoEnLista();
+            //sv.cargarListaEnArchivo(listaVehiculos);
 
-            ////Vehiculo vehiculo1 = new Vehiculo();
-            ////vehiculo1.Anio = "2005";
-            ////vehiculo1.Id_vehiculo = 10;
-            ////vehiculo1.Precio_vta = 21321;
-
-            ////Console.WriteLine(vehiculo1.ToString());
-            ///
 
             Console.CursorVisible = false;
             string[] options = { "Opción 1", "Vehiculos", "Opción 3", "Salir" };
@@ -74,16 +67,15 @@ namespace FinalLaboratorioII
                         break;
                 }
             }
+
+
+
+
+
+
         }
 
-        static FileStream crearArchivo()
-        {
-            string ruta = "ListaClientes.txt";
-            StreamWriter writer;
-            FileStream archivo = new FileStream(ruta, FileMode.Create);
-            archivo.Close();
-            return archivo;
-        }
-    } 
+
+    }
 
 }
