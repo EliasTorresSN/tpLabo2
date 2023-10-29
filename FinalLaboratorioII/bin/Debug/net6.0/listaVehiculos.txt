@@ -1,3 +1,6 @@
-ID: 1 ID Marca: 1 Modelo: cgevy Anio: 123 Kilometros: 123 Patente: 123 ID Segmento: 1 ID Combustible: 1 Observaciones: 123 Precio-Venta: 123
-ID: 3 ID Marca: 1 Modelo: 567 Anio: 567 Kilometros: 567 Patente: 567 ID Segmento: 1 ID Combustible: 1 Observaciones: 567 Precio-Venta: 567
-ID: 4 ID Marca: 1 Modelo: 1234 Anio: 123 Kilometros: 123 Patente:  ID Segmento: 1 ID Combustible: 1 Observaciones: 123 Precio-Venta: 2453
+ID: 1 ID Marca: 1 Modelo: 1 Anio: 1 Kilometros: 1 Patente: 1 ID Segmento: 1 ID Combustible: 1 Observaciones: 1 Precio-Venta: 1
+ID: 2 ID Marca: 1 Modelo: 2 Anio: 2 Kilometros: 2 Patente: 2 ID Segmento: 1 ID Combustible: 1 Observaciones: 2 Precio-Venta: 2
+ID: 4 ID Marca: 1 Modelo: 4 Anio: 4 Kilometros: 4 Patente: 4 ID Segmento: 1 ID Combustible: 1 Observaciones: 4 Precio-Venta: 4
+ID: 6 ID Marca: 1 Modelo: 6 Anio: 6 Kilometros: 6 Patente: 6 ID Segmento: 1 ID Combustible: 1 Observaciones: 6 Precio-Venta: 6
+ID: 7 ID Marca: 1 Modelo: 7 Anio: 7 Kilometros: 7 Patente: 7 ID Segmento: 1 ID Combustible: 1 Observaciones: 7 Precio-Venta: 7
+Cantidad de vehiculos ingresados:;7;

@@ -18,14 +18,20 @@ namespace FinalLaboratorioII.servicios
             List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
             Vehiculo vehiculo1 = new Vehiculo();
             Console.WriteLine("Nuevo vehículo");
+            int numAux = 0;
+
             if (lista.Count==0)
             {
                 vehiculo1.Id_vehiculo = 1;
             }
             else
             {
+                string[] n = lista[lista.Count - 1].Split(";");
+                string n2 = n[1];
+                Console.WriteLine("n2 "+n2);
+                numAux = int.Parse(n2) + 1;
+                vehiculo1.Id_vehiculo = numAux;
 
-            vehiculo1.Id_vehiculo = (int.Parse(lista[lista.Count - 1].Substring(4,2))) + 1;
             }
 
             //Console.WriteLine("id_marca");
@@ -62,7 +68,24 @@ namespace FinalLaboratorioII.servicios
         {
             List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
             Vehiculo v = crearVehiculo();
-            lista.Add(v.ToString());
+            string cantTotal = "";
+            int numAux = 0;
+            if (lista.Count== 0) {
+
+                lista.Add(v.ToString());
+                cantTotal = "Cantidad de vehiculos ingresados:;" + lista.Count + ";";
+                lista.Add(cantTotal);
+            }
+            else
+            {
+                string[] n = lista[lista.Count - 1].Split(";");
+                string n2 = n[1];
+                numAux = int.Parse(n2) + 1;
+                lista[lista.Count - 1] = v.ToString();
+                lista.Add("Cantidad de vehiculos ingresados:;" + numAux+";");
+                
+            }
+
             return lista;
         }
         public void  cargarListaEnArchivo(List<string>lista)
@@ -172,7 +195,7 @@ namespace FinalLaboratorioII.servicios
                        
                         // Realiza alguna acción según la opción seleccionada.
                         Console.Clear();
-                        Console.WriteLine($"Seleccionaste: {lista[selectedOption].Substring(0,6)}");
+                        Console.WriteLine($"Seleccionaste: {lista[selectedOption]}");
                         Console.WriteLine("Eliminar?");
                         string res = Console.ReadLine();
                         if (res=="si")
