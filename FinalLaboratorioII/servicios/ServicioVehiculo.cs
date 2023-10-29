@@ -31,7 +31,6 @@ namespace FinalLaboratorioII.servicios
                 Console.WriteLine("n2 "+n2);
                 numAux = int.Parse(n2) + 1;
                 vehiculo1.Id_vehiculo = numAux;
-
             }
 
             //Console.WriteLine("id_marca");
@@ -71,9 +70,8 @@ namespace FinalLaboratorioII.servicios
             string cantTotal = "";
             int numAux = 0;
             if (lista.Count== 0) {
-
                 lista.Add(v.ToString());
-                cantTotal = "Cantidad de vehiculos ingresados:;" + lista.Count + ";";
+                cantTotal = "Cant:;" + lista.Count + ";";
                 lista.Add(cantTotal);
             }
             else
@@ -82,10 +80,8 @@ namespace FinalLaboratorioII.servicios
                 string n2 = n[1];
                 numAux = int.Parse(n2) + 1;
                 lista[lista.Count - 1] = v.ToString();
-                lista.Add("Cantidad de vehiculos ingresados:;" + numAux+";");
-                
+                lista.Add("Cant:;" + numAux+";");
             }
-
             return lista;
         }
         public void  cargarListaEnArchivo(List<string>lista)
@@ -104,10 +100,25 @@ namespace FinalLaboratorioII.servicios
         public void mostrarVehiculos(string _ruta)
         {
             List<string>lista = cargarArchivoEnLista(_ruta);
-            foreach (var item in lista)
+            int cont = 0;
+            Console.Clear();
+            if (lista.Count==0||lista.Count==1)
             {
-                Console.WriteLine(item);
+                Console.WriteLine("No hay vehiculos cargados");
             }
+            else
+            {
+                foreach (var item in lista)
+                {
+                    
+                    if (cont != lista.Count -1)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    cont++;
+                }
+            }
+            
         }
         public void actualizarVehiculo(int _id,string _ruta)
         {
@@ -159,7 +170,6 @@ namespace FinalLaboratorioII.servicios
             _archivo.Close();
             return lista;
         }
-
         public void eliminarVehiculo()
         {
             List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
@@ -213,7 +223,6 @@ namespace FinalLaboratorioII.servicios
             }
 
         }
-
         public void menuVehiculos() {
 
             Console.CursorVisible = false;

@@ -1,6 +1,4 @@
-ID: 1 ID Marca: 1 Modelo: 1 Anio: 1 Kilometros: 1 Patente: 1 ID Segmento: 1 ID Combustible: 1 Observaciones: 1 Precio-Venta: 1
-ID: 2 ID Marca: 1 Modelo: 2 Anio: 2 Kilometros: 2 Patente: 2 ID Segmento: 1 ID Combustible: 1 Observaciones: 2 Precio-Venta: 2
-ID: 4 ID Marca: 1 Modelo: 4 Anio: 4 Kilometros: 4 Patente: 4 ID Segmento: 1 ID Combustible: 1 Observaciones: 4 Precio-Venta: 4
-ID: 6 ID Marca: 1 Modelo: 6 Anio: 6 Kilometros: 6 Patente: 6 ID Segmento: 1 ID Combustible: 1 Observaciones: 6 Precio-Venta: 6
-ID: 7 ID Marca: 1 Modelo: 7 Anio: 7 Kilometros: 7 Patente: 7 ID Segmento: 1 ID Combustible: 1 Observaciones: 7 Precio-Venta: 7
-Cantidad de vehiculos ingresados:;7;
+ID: 8 ID Marca: 1 Modelo: 8 Anio: 8 Kilometros: 8 Patente: 8 ID Segmento: 1 ID Combustible: 1 Observaciones: 8 Precio-Venta: 8
+ID: 9 ID Marca: 1 Modelo: 9 Anio: 9 Kilometros: 9 Patente: 9 ID Segmento: 1 ID Combustible: 1 Observaciones: 9 Precio-Venta: 9
+ID: 10 ID Marca: 1 Modelo: 10 Anio: 10 Kilometros: 10 Patente: 10 ID Segmento: 1 ID Combustible: 1 Observaciones: 10 Precio-Venta: 10
+Cant:;10;
