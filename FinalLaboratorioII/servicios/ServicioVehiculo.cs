@@ -1,10 +1,5 @@
 ﻿using FinalLaboratorioII.entidades;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FinalLaboratorioII.servicios
 {
@@ -291,7 +286,7 @@ namespace FinalLaboratorioII.servicios
                             Console.WriteLine("Saliendo del programa.");
                             return;
                         }
-                        // Realiza alguna acción según la opción seleccionada.
+                        
                         Console.Clear();
                         Console.WriteLine($"Seleccionaste: {opciones[opcionElegida]}");
                         Console.ReadKey();
@@ -304,9 +299,9 @@ namespace FinalLaboratorioII.servicios
         {
             Console.Clear();
             List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
-
             Console.CursorVisible = false;
-            int selectedOption = 0;
+            int opcionElegida = 0;
+
             if (lista.Count>1)
             {
                 while (true)
@@ -314,13 +309,17 @@ namespace FinalLaboratorioII.servicios
                     Console.Clear();
                     for (int i = 0; i < lista.Count; i++)
                     {
-                        if (i == selectedOption)
+                        if (i != lista.Count-1)
                         {
-                            Console.ForegroundColor = ConsoleColor.Black;
-                            Console.BackgroundColor = ConsoleColor.White;
+                            if (i == opcionElegida)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.BackgroundColor = ConsoleColor.White;
+                            }
+                            Console.WriteLine(lista[i]);
+                            Console.ResetColor();
                         }
-                        Console.WriteLine(lista[i]);
-                        Console.ResetColor();
+                        
                     }
 
                     var key = Console.ReadKey().Key;
@@ -328,90 +327,87 @@ namespace FinalLaboratorioII.servicios
                     switch (key)
                     {
                         case ConsoleKey.UpArrow:
-                            selectedOption = Math.Max(0, selectedOption - 1);
+                            opcionElegida = Math.Max(0, opcionElegida - 1);
                             break;
                         case ConsoleKey.DownArrow:
-                            selectedOption = Math.Min(lista.Count - 1, selectedOption + 1);
+                            opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
                             break;
                         case ConsoleKey.Enter:
 
-                            // Realiza alguna acción según la opción seleccionada.
                             Console.Clear();
-                            Console.WriteLine($"Seleccionaste: {lista[selectedOption]}");
-                            Console.WriteLine("Eliminar?");
-                            string res = Console.ReadLine();
-                            if (res == "si")
-                            {
-                                lista.RemoveAt(selectedOption);
-                                Console.WriteLine("vehiculo eliminado");
-
-                            }
-                            FileStream archivoNuevo = new FileStream("listaVehiculos.txt", FileMode.Create);
-                            archivoNuevo.Close();
-                            cargarListaEnArchivo(lista);
-                            Console.ReadKey();
+                            Console.WriteLine($"Seleccionaste: {lista[opcionElegida]}");
+                            eliminarVehiculo(opcionElegida);
                             break;
                     }
                 }
             }
             else
             {
-                Console.WriteLine("No hay items cargados");            }
+                Console.WriteLine("No hay items cargados"); 
+            }
            
         }
         public void eliminarVehiculo(int opcion)
         {
-            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
-            string[] opciones = { "Si", "No" };
-            Console.CursorVisible = false;
-            bool subMenuActivo = true;
-            int opcionElegida = 0;
-
             Console.Clear();
+            Console.CursorVisible = false;
+            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
+            string[] opciones = { "Si", "No"};
+            int opcionElegida = 0;
+            bool subMenu = true;
 
             if (lista.Count>1)
             {
+                Console.Clear();
                 Console.WriteLine("¿Eliminar item seleccionado?");
-                for (int i = 0; i < opciones.Length; i++)
+
+                while (subMenu)
                 {
-                    if (i == opcionElegida)
+                    Console.Clear();
+                    for (int i = 0; i < opciones.Length; i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.BackgroundColor = ConsoleColor.White;
-                    }
-                    Console.WriteLine(opciones[i]);
-                    Console.ResetColor();
-                }
-                var subMenuKey = Console.ReadKey().Key;
-
-                switch (subMenuKey)
-                {
-                    case ConsoleKey.UpArrow:
-                        opcionElegida = Math.Max(0, opcionElegida - 1);
-                        break;
-                    case ConsoleKey.DownArrow:
-                        opcionElegida = Math.Min(1, opcionElegida + 1);
-                        break;
-                    case ConsoleKey.Enter:
-                        Console.Clear();
-                        switch (opcionElegida)
+                        if (i == opcionElegida)
                         {
-                            case 0:
-                                lista.RemoveAt(opcion);
-                                Console.WriteLine("vehiculo eliminado");
-
-                                break;
-                            case 1:
-                                Console.WriteLine("Has seleccionado la Opción 1 del submenú. Realiza la acción correspondiente.");
-                                Console.ReadKey();
-                                break;
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.White;
                         }
-                        subMenuActivo = false;
-                        break;
-                    case ConsoleKey.Escape:
-                        subMenuActivo = false;
-                        break;
+                        Console.WriteLine(opciones[i]);
+                        Console.ResetColor();
+                    }
+
+                    var subMenuKey = Console.ReadKey().Key;
+
+                    switch (subMenuKey)
+                    {
+                        case ConsoleKey.UpArrow:
+                            opcionElegida = Math.Max(0, opcionElegida - 1);
+                            break;
+                        case ConsoleKey.DownArrow:
+                            opcionElegida = Math.Min(1, opcionElegida + 1);
+                            break;
+                        case ConsoleKey.Enter:
+                            Console.Clear();
+                            switch (opcionElegida)
+                            {
+                                case 0:
+                                    lista.RemoveAt(opcion);
+                                    Console.WriteLine("Item eliminado");
+                                    break;
+                                case 1:
+                                    Console.WriteLine("No se eliminó el ítem");
+                                    Console.ReadKey();
+                                    break;
+                            }
+                            subMenu = false;
+                            break;
+                        case ConsoleKey.Escape:
+                            subMenu = false;
+                            break;
+                    }
+
                 }
+
+
             }
             else
             {

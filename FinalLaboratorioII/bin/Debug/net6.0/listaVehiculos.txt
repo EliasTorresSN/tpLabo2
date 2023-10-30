@@ -1,1 +1,2 @@
-Cant:;11;
+ID: 12 ID Marca: 1 Modelo: 12 Anio: 12 Kilometros: 12 Patente: 12 ID Segmento: 1 ID Combustible: 1 Observaciones: 12 Precio-Venta: 12
+Cant:;14;
