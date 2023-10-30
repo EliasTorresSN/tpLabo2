@@ -1,4 +1,1 @@
-ID: 8 ID Marca: 1 Modelo: 8 Anio: 8 Kilometros: 8 Patente: 8 ID Segmento: 1 ID Combustible: 1 Observaciones: 8 Precio-Venta: 8
-ID: 9 ID Marca: 1 Modelo: 9 Anio: 9 Kilometros: 9 Patente: 9 ID Segmento: 1 ID Combustible: 1 Observaciones: 9 Precio-Venta: 9
-ID: 10 ID Marca: 1 Modelo: 10 Anio: 10 Kilometros: 10 Patente: 10 ID Segmento: 1 ID Combustible: 1 Observaciones: 10 Precio-Venta: 10
-Cant:;10;
+Cant:;11;
