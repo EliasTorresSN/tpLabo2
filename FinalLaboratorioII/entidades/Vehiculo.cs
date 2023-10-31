@@ -20,7 +20,7 @@ namespace FinalLaboratorioII.entidades
         {
 
         }
-
+        
         public Vehiculo(int id_vehiculo, string patente, string kilometros, string anio, int id_marca, string modelo, int id_segmento, int id_combustible, double precio_vta, string observaciones)
         {
             this.id_vehiculo = id_vehiculo;
@@ -82,10 +82,15 @@ namespace FinalLaboratorioII.entidades
             set { this.precio_vta = value; }
         }
 
+        //public override string ToString()
+        //{
+        //    return $"ID: ;{id_vehiculo}; ID Marca: ;{id_marca}; Modelo: ;{modelo}; Anio: ;{anio}; Kilometros: ;{kilometros}; Patente: ;{patente}; ID Segmento: ;{id_segmento}; ID Combustible: ;{id_combustible};" +
+        //        $" Observaciones: ;{observaciones}; Precio-Venta: ;{precio_vta};";
+        //}
         public override string ToString()
         {
-            return $"ID: {id_vehiculo} ID Marca: {id_marca} Modelo: {modelo} Anio: {anio} Kilometros: {kilometros} Patente: {patente} ID Segmento: {id_segmento} ID Combustible: {id_combustible}" +
-                $" Observaciones: {observaciones} Precio-Venta: {precio_vta}";
+            return $" ID: {id_vehiculo} ID_Marca: {id_marca} Modelo: {modelo} Año: {anio} Kilometros: {kilometros} Patente: {patente} ID_Segmento: {id_segmento} ID_Combustible: {id_combustible}" +
+                $" Observaciones: {observaciones} Precio_Venta: {precio_vta}";
         }
 
     }

@@ -57,6 +57,20 @@ namespace FinalLaboratorioII.servicios
 
             return vehiculo1;
         }
+        public List<string> cargarArchivoEnLista(string _ruta)
+        {
+            FileStream _archivo = new FileStream(_ruta, FileMode.Open);
+            StreamReader reader = new StreamReader(_archivo);
+            List<string> lista = new List<string>();
+            while (!reader.EndOfStream)
+            {
+                string linea = reader.ReadLine();
+                lista.Add(linea);
+            }
+            reader.Close();
+            _archivo.Close();
+            return lista;
+        }
         public List<string> cargarVehiculoEnLista()
         {
             List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
@@ -157,9 +171,7 @@ namespace FinalLaboratorioII.servicios
                                 Console.WriteLine(opciones[i]);
                                 Console.ResetColor();
                             }
-                            //Console.WriteLine(opcionSubMenu == 0 ? "> Opción 1" : "  Opción 1");
-                            //Console.WriteLine(opcionSubMenu == 1 ? "> Opción 2" : "  Opción 2");
-                            //Console.WriteLine("Presiona Enter para confirmar, Esc para volver al menú anterior.");
+                         
 
                             var subMenuKey = Console.ReadKey().Key;
 
@@ -176,7 +188,7 @@ namespace FinalLaboratorioII.servicios
                                     switch (opcionSubMenu)
                                     {
                                         case 0:
-                                            Console.WriteLine("Has seleccionado la Opción 1 del submenú. Realiza la acción correspondiente.");
+                                            actualizarVehiculo(opcionElegida);
                                             Console.ReadKey();
                                             break;
                                         case 1:
@@ -194,63 +206,123 @@ namespace FinalLaboratorioII.servicios
                 }
             }
 
-            //Console.Clear();
-            //if (lista.Count == 0 || lista.Count == 1)
-            //{
-            //    Console.WriteLine("No hay vehiculos cargados");
-            //}
-            //else
-            //{
-            //    foreach (var item in lista)
-            //    {
-
-            //        if (cont != lista.Count - 1)
-            //        {
-            //            Console.WriteLine(item);
-            //        }
-            //        cont++;
-            //    }
-            //}
-
         }
-        public void actualizarVehiculo()
+        public void actualizarVehiculo(int opcion)
         {
-            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
-
-           
-
-        }
-        public List<string> cargarArchivoEnLista(string _ruta)
-        {
-            FileStream _archivo = new FileStream(_ruta, FileMode.Open);
-            StreamReader reader = new StreamReader(_archivo);
-            List<string> lista = new List<string>();
-            while (!reader.EndOfStream)
-            {
-                string linea = reader.ReadLine();
-                lista.Add(linea);
-            }
-            reader.Close();
-            _archivo.Close();
-            return lista;
-        }
-        public void menuVehiculos() {
-
+            Console.Clear();
             Console.CursorVisible = false;
-            string[] opciones = { "Agregar vehículo", "Mostrar lista de vehiculos", "Eliminar vehiculo", "Salir" };
+            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
+            string[] opciones = { "Si", "No" };
+            int opcionElegida = 0;
+            bool subMenu = true;
+
+            if (lista.Count > 1)
+            {
+                Console.Clear();
+                Console.WriteLine("¿Modificar item seleccionado?");
+
+                while (subMenu)
+                {
+                    Console.Clear();
+                    for (int i = 0; i < opciones.Length; i++)
+                    {
+                        if (i == opcionElegida)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.White;
+                        }
+                        Console.WriteLine(opciones[i]);
+                        Console.ResetColor();
+                    }
+
+                    var subMenuKey = Console.ReadKey().Key;
+
+                    switch (subMenuKey)
+                    {
+                        case ConsoleKey.UpArrow:
+                            opcionElegida = Math.Max(0, opcionElegida - 1);
+                            break;
+
+                        case ConsoleKey.DownArrow:
+                            opcionElegida = Math.Min(1, opcionElegida + 1);
+                            break;
+
+                        case ConsoleKey.Enter:
+                            Console.Clear();
+                            switch (opcionElegida)
+                            {
+                                case 0:
+                                    Vehiculo v = vehiculoParaActualizar(lista,opcion);
+
+
+                                    FileStream archivoNuevo = new FileStream("listaVehiculos.txt", FileMode.Create);
+                                    archivoNuevo.Close();
+                                    cargarListaEnArchivo(lista);
+                                    Console.WriteLine("Item modificado");
+                                    Console.ReadKey();
+                                    break;
+                                case 1:
+                                    Console.WriteLine("No se modificó el ítem");
+                                    Console.ReadKey();
+                                    break;
+                            }
+                            subMenu = false;
+                            break;
+
+                        case ConsoleKey.Escape:
+                            subMenu = false;
+                            break;
+                    }
+                }
+            }
+
+
+        }
+
+      public Vehiculo vehiculoParaActualizar(List<string>lista, int opcion)
+        {   
+            
+            string[] atributos = lista[opcion].Split(" ");
+            string[] datos = new string[10];
+            string[] datosRecorrido = { "Marca", "Modelo", "Año", "Kilometros", "Patente", "Segmento", "Combustible", "Observaciones", "Precio" };
+
+            int cont = 0,cont2 = 0;
+            
+            for (int i = 0; i < atributos.Length; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    datos[cont] = atributos[i];
+                    cont++;
+                }
+            }
+
+            Vehiculo v = new Vehiculo();            
+            v.Id_vehiculo = int.Parse(datos[0]);
+            v.Id_marca = int.Parse(datos[1]);
+            v.Modelo = datos[2];
+            v.Anio = datos[3];
+            v.Kilometros = datos[4];
+            v.Patente = datos[5];
+            v.Id_segmento = int.Parse(datos[6]);
+            v.Id_combustible = int.Parse(datos[7]);
+            v.Observaciones = datos[8];
+            v.Precio_vta = double.Parse(datos[9]);
+
+            Console.CursorVisible = false;            
             int opcionElegida = 0;
 
             while (true)
             {
                 Console.Clear();
-                for (int i = 0; i < opciones.Length; i++)
+                for (int i = 0; i < datosRecorrido.Length; i++)
                 {
                     if (i == opcionElegida)
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
                     }
-                    Console.WriteLine(opciones[i]);
+                    Console.WriteLine(datosRecorrido[i]);
                     Console.ResetColor();
                 }
 
@@ -262,39 +334,130 @@ namespace FinalLaboratorioII.servicios
                         opcionElegida = Math.Max(0, opcionElegida - 1);
                         break;
                     case ConsoleKey.DownArrow:
-                        opcionElegida = Math.Min(opciones.Length - 1, opcionElegida + 1);
+                        opcionElegida = Math.Min(datosRecorrido.Length - 1, opcionElegida + 1);
                         break;
                     case ConsoleKey.Enter:
-                        if (opcionElegida == 0)
+
+                        string nValor = "";
+                        bool isOk = false;
+                        Console.Write($"Ingrese el nuevo valor para -> {opcionElegida}:\n");
+                        if (opcionElegida==0)
                         {
-                            List<string> listaVehiculos = cargarVehiculoEnLista();
-                            cargarListaEnArchivo(listaVehiculos);
+                            mostrarMenuInteractivo("listaMarcas.txt");
                         }
-                        else if (opcionElegida == 1)
+                        if (opcionElegida==5)
                         {
-                            mostrarVehiculos("listaVehiculos.txt");
-                            Console.ReadKey();
+                            mostrarMenuInteractivo("listaSegmentos.txt");
                         }
-                        else if (opcionElegida == 2)
+                        if (opcionElegida == 6)
                         {
-                            eliminarVehiculo();
-                            Console.ReadKey();
+                            mostrarMenuInteractivo("listaCombustibles.txt");
                         }
-                        else if (opcionElegida == opciones.Length - 1)
+                        if (opcionElegida == 8)
                         {
-                            Console.Clear();
-                            Console.WriteLine("Saliendo del programa.");
-                            return;
+                            isOk = false;
+
+                            double n = 0;
+                            while (!isOk)
+                            {
+                                try
+                                {
+                                    nValor = Console.ReadLine();
+                                    n = double.Parse(nValor);
+                                    isOk = true;
+                                }
+                                catch (Exception)
+                                {
+                                    isOk = false;
+                                    Console.WriteLine("Debe ingresar sólo numeros");
+                                    Console.WriteLine("Ingrese nuevamente el valor");
+
+                                }
+                            }
                         }
-                        
+                        else
+                        {
+                            nValor = Console.ReadLine();
+
+                        }
+
+
+                        //if (opcionElegida == 5 || opcionElegida == 6)
+                        //{
+                        //    int n = 0;
+                        //    while (!isOk)
+                        //    {
+                        //        try
+                        //        {
+                        //            nValor = Console.ReadLine();
+                        //            n = int.Parse(nValor);
+                        //            isOk = true;
+                        //        }
+                        //        catch (Exception)
+                        //        {
+                        //            isOk = false;
+                        //            Console.WriteLine("Debe ingresar sólo numeros");
+                        //            Console.WriteLine("Ingrese nuevamente el valor");
+                        //        }
+                        //    }
+                        //}
+
+
                         Console.Clear();
-                        Console.WriteLine($"Seleccionaste: {opciones[opcionElegida]}");
                         Console.ReadKey();
                         break;
                 }
             }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            for (int i = 0; i < datosRecorrido.Length; i++)
+            {
+                Console.WriteLine("dr " + datosRecorrido[i]);
+            }
+
+            v.Id_vehiculo = int.Parse(datos[0]);
+            v.Id_marca = int.Parse(datos[1]);
+            v.Modelo = datos[2];
+            v.Anio = datos[3];
+            v.Kilometros = datos[4];
+            v.Patente = datos[5];
+            v.Id_segmento = int.Parse(datos[6]);
+            v.Id_combustible = int.Parse(datos[7]);
+            v.Observaciones = datos[8];
+            v.Precio_vta = double.Parse(datos[9]);
+
+            return v;
         }
+      
         public void eliminarVehiculo()
         {
             Console.Clear();
@@ -406,7 +569,10 @@ namespace FinalLaboratorioII.servicios
                     }
 
                 }
-
+                FileStream archivoNuevo = new FileStream("listaVehiculos.txt", FileMode.Create);
+                archivoNuevo.Close();
+                cargarListaEnArchivo(lista);
+                Console.ReadKey();
 
             }
             else
@@ -415,11 +581,124 @@ namespace FinalLaboratorioII.servicios
             }
             
 
-            FileStream archivoNuevo = new FileStream("listaVehiculos.txt", FileMode.Create);
-            archivoNuevo.Close();
-            cargarListaEnArchivo(lista);
-            Console.ReadKey();
+            
         }
+        public void menuVehiculos() {
 
+            Console.CursorVisible = false;
+            string[] opciones = { "Agregar vehículo", "Mostrar lista de vehiculos", "Eliminar vehiculo", "Salir" };
+            int opcionElegida = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                for (int i = 0; i < opciones.Length; i++)
+                {
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(opciones[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(opciones.Length - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        if (opcionElegida == 0)
+                        {
+                            List<string> listaVehiculos = cargarVehiculoEnLista();
+                            cargarListaEnArchivo(listaVehiculos);
+                        }
+                        else if (opcionElegida == 1)
+                        {
+                            mostrarVehiculos("listaVehiculos.txt");
+                            Console.ReadKey();
+                        }
+                        else if (opcionElegida == 2)
+                        {
+                            eliminarVehiculo();
+                            Console.ReadKey();
+                        }
+                        else if (opcionElegida == opciones.Length - 1)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Saliendo del programa.");
+                            return;
+                        }
+                        
+                        Console.Clear();
+                        Console.WriteLine($"Seleccionaste: {opciones[opcionElegida]}");
+                        Console.ReadKey();
+                    break;
+                }
+            }
+
+        }
+        public void mostrarMenuInteractivo(string _ruta)
+        {
+            Console.Clear();
+            List<string> lista = cargarArchivoEnLista(_ruta);
+            int cont = 0;
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
+
+            while (true)
+            {
+                Console.Clear();
+                if (lista.Count == 0 || lista.Count == 1)
+                {
+                    Console.WriteLine("No hay marcas cargadas");
+                    break;
+                }
+                else
+                {
+                    for (int i = 0; i < lista.Count; i++)
+                    {
+                        if (i != lista.Count - 1)
+                        {
+                            if (i == opcionElegida)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.BackgroundColor = ConsoleColor.White;
+                            }
+                            Console.WriteLine(lista[i]);
+                            Console.ResetColor();
+                        }
+                    }
+
+                }
+
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+
+                        
+                        
+                    break;
+                }
+            }
+        }
     }
+
+
+
 }
