@@ -11,7 +11,7 @@ namespace FinalLaboratorioII
         {
             ServicioVehiculo sv = new ServicioVehiculo();
             Console.CursorVisible = false;
-            string[] opciones = { "Opción 1", "Vehiculos", "Opción 3", "Salir" };
+            string[] opciones = { "Clientes", "VEHICULOS", "Ventas", "Salir" };
             int opcionElegida = 0;
 
             while (true)

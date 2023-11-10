@@ -275,12 +275,10 @@ namespace FinalLaboratorioII.servicios
                     }
                 }
             }
-
-
         }
 
       public Vehiculo vehiculoParaActualizar(List<string>lista, int opcion)
-        {   
+      {   
             
             string[] atributos = lista[opcion].Split(" ");
             string[] datos = new string[10];
@@ -343,11 +341,12 @@ namespace FinalLaboratorioII.servicios
                         Console.Write($"Ingrese el nuevo valor para -> {opcionElegida}:\n");
                         if (opcionElegida==0)
                         {
-                            mostrarMenuInteractivo("listaMarcas.txt");
+                            int res = mostrarMenuInteractivo("listaMarcas.txt");
+                            v.Id_marca = res;
                         }
                         if (opcionElegida==5)
                         {
-                            mostrarMenuInteractivo("listaSegmentos.txt");
+                            int res = mostrarMenuInteractivo("listaSegmentos.txt");
                         }
                         if (opcionElegida == 6)
                         {
@@ -374,6 +373,9 @@ namespace FinalLaboratorioII.servicios
 
                                 }
                             }
+
+                            v.Precio_vta = n;
+
                         }
                         else
                         {
@@ -382,25 +384,7 @@ namespace FinalLaboratorioII.servicios
                         }
 
 
-                        //if (opcionElegida == 5 || opcionElegida == 6)
-                        //{
-                        //    int n = 0;
-                        //    while (!isOk)
-                        //    {
-                        //        try
-                        //        {
-                        //            nValor = Console.ReadLine();
-                        //            n = int.Parse(nValor);
-                        //            isOk = true;
-                        //        }
-                        //        catch (Exception)
-                        //        {
-                        //            isOk = false;
-                        //            Console.WriteLine("Debe ingresar sólo numeros");
-                        //            Console.WriteLine("Ingrese nuevamente el valor");
-                        //        }
-                        //    }
-                        //}
+                        
 
 
                         Console.Clear();
@@ -408,36 +392,6 @@ namespace FinalLaboratorioII.servicios
                         break;
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             for (int i = 0; i < datosRecorrido.Length; i++)
             {
@@ -456,7 +410,7 @@ namespace FinalLaboratorioII.servicios
             v.Precio_vta = double.Parse(datos[9]);
 
             return v;
-        }
+      }
       
         public void eliminarVehiculo()
         {
@@ -644,20 +598,20 @@ namespace FinalLaboratorioII.servicios
             }
 
         }
-        public void mostrarMenuInteractivo(string _ruta)
+        public  int mostrarMenuInteractivo(string _ruta)
         {
             Console.Clear();
             List<string> lista = cargarArchivoEnLista(_ruta);
-            int cont = 0;
             Console.CursorVisible = false;
             int opcionElegida = 0;
+            var res = 0;
 
             while (true)
             {
                 Console.Clear();
                 if (lista.Count == 0 || lista.Count == 1)
                 {
-                    Console.WriteLine("No hay marcas cargadas");
+                    Console.WriteLine("No hay ítems cargados");
                     break;
                 }
                 else
@@ -678,7 +632,6 @@ namespace FinalLaboratorioII.servicios
 
                 }
 
-
                 var key = Console.ReadKey().Key;
 
                 switch (key)
@@ -690,12 +643,11 @@ namespace FinalLaboratorioII.servicios
                         opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
                         break;
                     case ConsoleKey.Enter:
-
-                        
-                        
+                        res = opcionElegida;                      
                     break;
                 }
             }
+            return res;
         }
     }
 

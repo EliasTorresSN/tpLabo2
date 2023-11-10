@@ -11,6 +11,7 @@ namespace FinalLaboratorioII.entidades
         {
 
         }
+       
         public Provincia(int id_provincia, string nombreProvincia)
         {
             this.id_provincia = id_provincia;
