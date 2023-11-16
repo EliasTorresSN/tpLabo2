@@ -1,4 +1,3 @@
-ID: 16 ID_Marca: 1 Modelo: 5 Año: 5 Kilometros: 5 Patente: 5 ID_Segmento: 1 ID_Combustible: 1 Observaciones: 5 Precio_Venta: 5
-ID: 17 ID_Marca: 1 Modelo: 5 Año: 5 Kilometros: 5 Patente: 5 ID_Segmento: 1 ID_Combustible: 1 Observaciones: 5 Precio_Venta: 5
-ID: 18 ID_Marca: 1 Modelo: 5 Año: 5 Kilometros: 5 Patente: 5 ID_Segmento: 1 ID_Combustible: 1 Observaciones: 5 Precio_Venta: 5
+ID:;16;ID_Marca:;1;Modelo:;5;Año:;5;Kilometros:;5;Patente:;5;ID_Segmento:;1;ID_Combustible:;1;Color:;" ";Cilindrada:;" ";Caja_carga=;false;Dimension_Caja=;" ";Carga_Max =;" ";Observaciones:;5;Precio_Venta:;5;
+
 Cant:;18;

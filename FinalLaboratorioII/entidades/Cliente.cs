@@ -15,17 +15,21 @@ namespace FinalLaboratorioII.entidades
         public Cliente()
         { }
 
-        public Cliente(int id_cliente, string cliente, string cuit, string domicilio, int id_localidad, string telefono, string correo)
+        public Cliente(int id_cliente, string nombreCliente, string cuit, string domicilio, int id_localidad, string telefono, string correo)
         {
-            this.id_cliente = id_cliente;
-            this.nombreCliente = cliente ?? throw new ArgumentNullException(nameof(cliente));
-            this.cuit = cuit ?? throw new ArgumentNullException(nameof(cuit));
-            this.domicilio = domicilio ?? throw new ArgumentNullException(nameof(domicilio));
-            this.id_localidad = id_localidad;
-            this.telefono = telefono ?? throw new ArgumentNullException(nameof(telefono));
-            this.correo = correo ?? throw new ArgumentNullException(nameof(correo));
+            this.Id_cliente = id_cliente;
+            this.NombreCliente = nombreCliente;
+            this.Cuit = cuit;
+            this.Domicilio = domicilio; 
+            this.Id_localidad = id_localidad;
+            this.Telefono = telefono;
+            this.Correo = correo; 
         }
 
+        public int Id_cliente
+        {
+            get { return this.id_cliente; } set {this.id_cliente = value;}
+        }
         public string NombreCliente
         {
             get{return this.nombreCliente;} set { this.nombreCliente = value; }
@@ -51,6 +55,14 @@ namespace FinalLaboratorioII.entidades
         public string Correo
         {
             get { return this.correo; } set { this.correo = value;}
+        }
+
+
+        public override string ToString()
+        {
+            return  $"ID_CLIENTE: {this.Id_cliente} NOMBRE: {this.NombreCliente} C.U.I.T: {this.Cuit}" +
+                $" DOMICILIO {this.Domicilio} ID_LOCALIDAD: {this.Id_localidad} TELÉFONO: {this.Telefono} CORREO: {this.Correo}"  ;
+
         }
 
     }

@@ -10,8 +10,9 @@ namespace FinalLaboratorioII
         static void Main(string[] args)
         {
             ServicioVehiculo sv = new ServicioVehiculo();
+            ServicioLocalidad sl = new ServicioLocalidad();
             Console.CursorVisible = false;
-            string[] opciones = { "Clientes", "VEHICULOS", "Ventas", "Salir" };
+            string[] opciones = { "CLIENTES", "VEHICULOS", "VENTAS","LOCALIDADES", "SALIR" };
             int opcionElegida = 0;
 
             while (true)
@@ -47,6 +48,14 @@ namespace FinalLaboratorioII
                         else if (opcionElegida == 1)
                         {
                             sv.menuVehiculos();
+                        }
+                        else if (opcionElegida == 2)
+                        {
+                        }
+                        else if (opcionElegida == 3)
+                        {
+                            sl.menuLocalidades();
+
                         }
                         else if (opcionElegida == opciones.Length - 1)
                         {

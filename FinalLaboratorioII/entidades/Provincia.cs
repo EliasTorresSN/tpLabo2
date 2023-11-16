@@ -28,7 +28,10 @@ namespace FinalLaboratorioII.entidades
         }
 
 
-
+        public override string ToString()
+        {
+            return $"ID: {this.Id_provincia} Provincia: {this.NombreProvincia}";
+        }
     }
 }
 

@@ -34,5 +34,12 @@ namespace FinalLaboratorioII.entidades
         {
             get { return nombreLocalidad; }set { nombreLocalidad = value; }
         }
+
+        public override string ToString()
+        {
+            return $"ID_LOCALIDAD: {this.Id_localidad} ID_PROVINCIA: {this.Id_provincia} LOCALIDAD: {this.NombreLocalidad}";
+        }
+
+
     }
 }

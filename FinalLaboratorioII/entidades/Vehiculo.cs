@@ -12,13 +12,13 @@ namespace FinalLaboratorioII.entidades
         private string modelo { get; set; }
         private int id_segmento { get; set; }
         private int id_combustible { get; set; }
-        private double precio_vta { get; set; }
-        private string observaciones { get; set; }    
         private string color {  get; set; }
         private string cilindrada {  get; set; }
         private bool caja_carga { get; set; }
         private string dimension_caja {  get; set; }
         private string carga_max {  get; set; }
+        private string observaciones { get; set; }    
+        private double precio_vta { get; set; }
 
 
 
@@ -38,6 +38,7 @@ namespace FinalLaboratorioII.entidades
             this.Patente = patente;
             this.Id_segmento = id_segmento;
             this.Id_combustible = id_combustible;
+            this.Color = color;
             this.Cilindrada = cilindrada;
             this.Caja_carga = caja_carga;
             this.Dimension_caja = dimension_caja;
@@ -107,8 +108,9 @@ namespace FinalLaboratorioII.entidades
 
         public override string ToString()
         {
-            return $" ID: {id_vehiculo} ID_Marca: {id_marca} Modelo: {modelo} Año: {anio} Kilometros: {kilometros} Patente: {patente} ID_Segmento: {id_segmento} ID_Combustible: {id_combustible}" + 
-                $"Caja_carga: {caja_carga} Dimension_caja: {dimension_caja}m2 Carga_max: {carga_max}  Observaciones: {observaciones} Precio_Venta: {precio_vta}";
+            return $"ID:;{Id_vehiculo};ID_Marca:;{Id_marca};Modelo:;{Modelo};Año:;{Anio};Kilometros:;{Kilometros};Patente:;{Patente};ID_Segmento:;{Id_segmento}" +
+                $";ID_Combustible:;{Id_combustible};Color:;{Color};Cilindrada:;{Cilindrada};Caja_carga=;{Caja_carga};Dimension_Caja=;{Dimension_caja};Carga_Max =;{Carga_max}" +
+                $";Observaciones:;{Observaciones};Precio_Venta:;{Precio_vta}";
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using FinalLaboratorioII.entidades;
+using FinalLaboratorioII.entidades.subEntidades;
 using System;
+using System.Collections.Specialized;
 
 namespace FinalLaboratorioII.servicios
 {
@@ -10,50 +12,7 @@ namespace FinalLaboratorioII.servicios
         }
         public Vehiculo crearVehiculo()
         {
-            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
-            Vehiculo vehiculo1 = new Vehiculo();
-            Console.WriteLine("Nuevo vehículo");
-            int numAux = 0;
-
-            if (lista.Count==0)
-            {
-                vehiculo1.Id_vehiculo = 1;
-            }
-            else
-            {
-                string[] n = lista[lista.Count - 1].Split(";");
-                string n2 = n[1];
-                numAux = int.Parse(n2) + 1;
-                vehiculo1.Id_vehiculo = numAux;
-            }
-
-            //Console.WriteLine("id_marca");
-            vehiculo1.Id_marca = 1;
-
-            Console.WriteLine("Modelo:");
-            vehiculo1.Modelo = Console.ReadLine();
-
-            Console.WriteLine("Año");
-            vehiculo1.Anio = Console.ReadLine();
-
-            Console.WriteLine("Ingrese patente");
-            vehiculo1.Patente = Console.ReadLine();
-
-            Console.WriteLine("Cantidad de kilometros");
-            vehiculo1.Kilometros = Console.ReadLine();
-                      
-            
-            //Console.WriteLine("id_segmento");
-            vehiculo1.Id_segmento = 1;
-
-            //Console.WriteLine("id_combustible");
-            vehiculo1.Id_combustible = 1;
-
-            Console.WriteLine("Observaciones:");
-            vehiculo1.Observaciones = Console.ReadLine();
-
-            Console.WriteLine("Precio:");
-            vehiculo1.Precio_vta = float.Parse(Console.ReadLine());
+           Vehiculo vehiculo1 = new Vehiculo();
 
             return vehiculo1;
         }
@@ -70,6 +29,49 @@ namespace FinalLaboratorioII.servicios
             reader.Close();
             _archivo.Close();
             return lista;
+        }
+        List<Vehiculo> convertirListaAVehiculos(List<string> lista)
+        {
+            List<Vehiculo>vehiculos = new List<Vehiculo>();
+            
+            for (int i = 0; i < (lista.Count*2); i++)
+            {
+                string[] vehiculoString = lista[i].Split(';');
+                vehiculos.Add(elementoStringAVehiculo(vehiculoString));
+            }
+            return vehiculos;
+        }
+        public Vehiculo elementoStringAVehiculo(string[]vehiculo)
+        {
+            Vehiculo v = new Vehiculo();
+            string[]atributos = new string[15];
+            int cont = 0;
+            for (int i = 0; i < vehiculo.Length; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    atributos[cont] = vehiculo[i];
+                    cont++;
+                }
+            }
+
+            v.Id_vehiculo = int.Parse(atributos[0]);
+            v.Id_marca = int.Parse(atributos[1]);
+            v.Modelo = atributos[2];
+            v.Anio = atributos[3];
+            v.Kilometros = atributos[4];
+            v.Patente = atributos[5];
+            v.Id_segmento = int.Parse(atributos[6]);
+            v.Id_combustible = int.Parse(atributos[7]);
+            v.Cilindrada = atributos[8];
+            v.Caja_carga = bool.Parse(atributos[9]);
+            v.Dimension_caja = atributos[10];
+            v.Observaciones = atributos[11];
+            v.Precio_vta = float.Parse(atributos[12]);
+
+
+
+            return v;
         }
         public List<string> cargarVehiculoEnLista()
         {
@@ -103,13 +105,11 @@ namespace FinalLaboratorioII.servicios
                     writer.WriteLine(item);
                 }
             }
-            _archivo.Close();
         }
-        public void mostrarVehiculos(string _ruta)
+        public void mostrarVehiculos(List<string>_lista)
         {
 
-            Console.Clear();
-            List<string> lista = cargarArchivoEnLista(_ruta);
+            List<string> lista = _lista;
             int cont = 0;
             Console.CursorVisible = false;            
             int opcionElegida = 0;
@@ -119,7 +119,7 @@ namespace FinalLaboratorioII.servicios
                 Console.Clear();
                 if (lista.Count == 0 || lista.Count == 1)
                 {
-                    Console.WriteLine("No hay vehiculos cargados");
+                    Console.WriteLine("No hay ítems cargados");
                     break;
                 }
                 else
@@ -276,8 +276,7 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
-
-      public Vehiculo vehiculoParaActualizar(List<string>lista, int opcion)
+        public Vehiculo vehiculoParaActualizar(List<string>lista, int opcion)
       {   
             
             string[] atributos = lista[opcion].Split(" ");
@@ -410,8 +409,7 @@ namespace FinalLaboratorioII.servicios
             v.Precio_vta = double.Parse(datos[9]);
 
             return v;
-      }
-      
+      }      
         public void eliminarVehiculo()
         {
             Console.Clear();
@@ -538,6 +536,9 @@ namespace FinalLaboratorioII.servicios
             
         }
         public void menuVehiculos() {
+            Console.Clear();
+            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
+            List<Vehiculo>listaVehiculos = convertirListaAVehiculos(lista);
 
             Console.CursorVisible = false;
             string[] opciones = { "Agregar vehículo", "Mostrar lista de vehiculos", "Eliminar vehiculo", "Salir" };
@@ -570,12 +571,11 @@ namespace FinalLaboratorioII.servicios
                     case ConsoleKey.Enter:
                         if (opcionElegida == 0)
                         {
-                            List<string> listaVehiculos = cargarVehiculoEnLista();
-                            cargarListaEnArchivo(listaVehiculos);
+                            cargarListaEnArchivo(lista);
                         }
                         else if (opcionElegida == 1)
                         {
-                            mostrarVehiculos("listaVehiculos.txt");
+                            mostrarVehiculos(lista);
                             Console.ReadKey();
                         }
                         else if (opcionElegida == 2)
@@ -649,6 +649,75 @@ namespace FinalLaboratorioII.servicios
             }
             return res;
         }
+        public void agregarVehiculo(List<Vehiculo>_listaVehiculos)
+        {
+            int id, idMarca, idSegmento, idCombustible;
+            string modelo, anio, patente, kms, color;
+
+            Camion camion = new Camion();
+           
+            Console.WriteLine("Nuevo vehículo");
+            //id_vehiculo
+            id = _listaVehiculos[_listaVehiculos.Count - 1].Id_vehiculo + 1;
+
+            Console.WriteLine("Marca");
+            idMarca = 1;
+            Console.WriteLine("Modelo");
+            string model = Console.ReadLine();
+            Console.WriteLine("Año");
+            string Anio = Console.ReadLine();
+
+            Console.WriteLine("Patente");
+            patente = Console.ReadLine();
+
+            Console.WriteLine("Cantidad de kilometros");
+            kms = Console.ReadLine();
+
+            Console.WriteLine("Combustible");
+            idCombustible = 1;
+
+            Console.WriteLine("Segmento");
+            idSegmento = 1;
+
+            Console.WriteLine("Color");
+            color = Console.ReadLine();
+
+            if (idSegmento == 1 || idSegmento == 2 || idSegmento == 3 )
+            {
+
+
+
+            }
+            else if ( idSegmento == 4)
+            {
+
+            }
+            else if (idSegmento == 5 || idSegmento == 6 || idSegmento == 7)
+            {
+
+            }
+            else if (idSegmento == 8)
+            {
+
+            }
+
+
+
+
+            //Console.WriteLine("id_combustible");
+            //vehiculo1.Id_combustible = 1;
+
+            //Console.WriteLine("Observaciones:");
+            //vehiculo1.Observaciones = Console.ReadLine();
+
+            //Console.WriteLine("Precio:");
+            //vehiculo1.Precio_vta = float.Parse(Console.ReadLine());
+
+
+
+        }
+
+
     }
 
 

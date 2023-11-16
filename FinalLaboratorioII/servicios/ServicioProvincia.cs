@@ -15,6 +15,7 @@ namespace FinalLaboratorioII.servicios
         public List<Provincia> crearListaProvincias()
         {
             List<Provincia> provincias = new List<Provincia> ();
+            Provincia SinDef = new Provincia(0, "Sin definir");
             Provincia BsAs = new Provincia(1,"Buenos Aires");
             Provincia Catamarca = new Provincia(2,"Catamarca");
             Provincia CABA = new Provincia(3,"Ciudad Autónoma de Buenos Aires");
@@ -40,6 +41,7 @@ namespace FinalLaboratorioII.servicios
             Provincia Tierra_Del_Fuego= new Provincia(23,"Tierra Del Fuego");
             Provincia Tucuman= new Provincia(24,"Tucumán");
 
+            provincias.Add(SinDef);
             provincias.Add(BsAs);
             provincias.Add(Catamarca);
             provincias.Add(CABA);
