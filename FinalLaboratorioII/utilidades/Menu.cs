@@ -1,4 +1,5 @@
-﻿using FinalLaboratorioII.servicios;
+﻿using FinalLaboratorioII.entidades;
+using FinalLaboratorioII.servicios;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -91,5 +92,45 @@ namespace FinalLaboratorioII.utilidades
                 }
             }
         }
+
+        public int mostrarMenuInteractivo(string[] lista)
+        {
+            Console.Clear();
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
+
+            while (true)
+            {
+                Console.Clear();
+
+                for (int i = 0; i < lista.Length; i++)
+                {
+
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(lista[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(lista.Length - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        int res = opcionElegida;
+                        return res;
+                }
+            }
+        }
+
     }
 }

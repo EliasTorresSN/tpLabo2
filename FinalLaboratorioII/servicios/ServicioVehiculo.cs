@@ -1,5 +1,6 @@
 ﻿using FinalLaboratorioII.entidades;
 using FinalLaboratorioII.entidades.subEntidades;
+using FinalLaboratorioII.utilidades;
 using System;
 using System.Collections.Specialized;
 
@@ -12,11 +13,16 @@ namespace FinalLaboratorioII.servicios
         }
         public Vehiculo crearVehiculo(List<Vehiculo>_vehiculos)
         {
+            Menu menu = new Menu();
             ServicioMarca sm = new ServicioMarca();
             ServicioSegmento ss = new ServicioSegmento();
             ServicioCombustible sc = new ServicioCombustible();
             Vehiculo vehiculo1 = new Vehiculo();
-            List<Marca> marcas = sm.convertirListaAMarca(sm.cargarArchivoEnLista("listaMarcas.txt"););
+            List<Marca> marcas = sm.convertirListaAMarca(sm.cargarArchivoEnLista("listaMarcas.txt"));
+            List<Segmento> segmentos = ss.crearListaSegmentos();
+            List<Combustible> combustibles = sc.crearListaCombustible();
+            string[]colores = { "Amarillo","Azul","Blanco","Gris","Marrón","Naranja","Negro","Rojo","Rosa","Verde" };
+            
 
             if (_vehiculos.Count == 0)
             {
@@ -30,7 +36,7 @@ namespace FinalLaboratorioII.servicios
             Console.WriteLine("ELIJA MARCA");
             int id_marca = sm.mostrarMenuInteractivo(marcas);
             Console.Clear();
-            vehiculo1.Id_marca = id_marca;
+            vehiculo1.Id_marca = id_marca + 1;
             Console.Clear();
             Console.WriteLine("INGRESE MODELO");
             string mod = Console.ReadLine();
@@ -45,15 +51,45 @@ namespace FinalLaboratorioII.servicios
             string patente = Console.ReadLine();
             vehiculo1.Patente = patente;
 
+            Console.WriteLine("ELIJA SEGMENTO");
+            int id_seg = ss.mostrarMenuInteractivo(segmentos);
+            Console.Clear();
+            vehiculo1.Id_segmento = id_seg + 1;
+
+            Console.WriteLine("ELIJA COMBUSTIBLE");
+            int id_comb = sc.mostrarMenuInteractivo(combustibles);
+            Console.Clear();
+            vehiculo1.Id_combustible = id_comb + 1;
+
+            Console.WriteLine("ELIJA COLOR");
+            int col = menu.mostrarMenuInteractivo(colores);
+            Console.Clear();
+            vehiculo1.Color = colores[col];
+
+            if (id_seg == 1 || id_seg == 2 || id_seg == 3)
+            {
 
 
-            //ID SEG
-            //id_comb
 
-            Console.WriteLine("INGRESE COLOR");
-            string color = Console.ReadLine();
-            vehiculo1.Color = color;
-            
+            }
+            else if (id_seg == 4)
+            {
+
+            }
+            else if (id_seg == 5 || id_seg == 6 || id_seg == 7)
+            {
+
+            }
+            else if (id_seg == 8)
+            {
+
+            }
+
+
+
+
+
+
             Console.WriteLine("INGRESE CILINDRADA");
             string cil= Console.ReadLine();
             vehiculo1.Cilindrada = cil;
@@ -785,6 +821,56 @@ namespace FinalLaboratorioII.servicios
 
 
         }
+
+
+
+
+
+
+
+        public int mostrarMenuInteractivo(List<Segmento> lista)
+        {
+            Console.Clear();
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
+
+            while (true)
+            {
+                Console.Clear();
+
+                for (int i = 0; i < lista.Count; i++)
+                {
+
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(lista[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        int res = opcionElegida;
+                        return res;
+                }
+            }
+        }
+
+
+
+
+
 
 
     }

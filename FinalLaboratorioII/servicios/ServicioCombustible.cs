@@ -27,6 +27,43 @@ namespace FinalLaboratorioII.servicios
             return combustibles;
         }
 
+        public int mostrarMenuInteractivo(List<Combustible> lista)
+        {
+            Console.Clear();
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
 
+            while (true)
+            {
+                Console.Clear();
+
+                for (int i = 0; i < lista.Count; i++)
+                {
+
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(lista[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        int res = opcionElegida;
+                        return res;
+                }
+            }
+        }
     }
 }
