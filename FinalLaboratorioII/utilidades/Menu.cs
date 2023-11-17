@@ -18,8 +18,10 @@ namespace FinalLaboratorioII.utilidades
         {
             ServicioVehiculo sv = new ServicioVehiculo();
             ServicioLocalidad sl = new ServicioLocalidad();
+            ServicioMarca sm = new ServicioMarca();
+            ServicioVenta svt = new ServicioVenta();
             Console.CursorVisible = false;
-            string[] opciones = { "CLIENTES", "VEHICULOS", "VENTAS", "LOCALIDADES" };
+            string[] opciones = { "CLIENTES", "VEHICULOS", "VENTAS", "LOCALIDADES", "MARCAS" };
             int opcionElegida = 0;
             while (true)
             {
@@ -59,11 +61,15 @@ namespace FinalLaboratorioII.utilidades
                         }
                         else if (opcionElegida == 2)
                         {
+                            
                         }
                         else if (opcionElegida == 3)
                         {
                             sl.menuLocalidades();
-
+                        }
+                        else if (opcionElegida == 4)
+                        {
+                            sm.menuMarcas();
                         }
                         else if (opcionElegida == opciones.Length - 1)
                         {

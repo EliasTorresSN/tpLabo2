@@ -10,9 +10,31 @@ namespace FinalLaboratorioII.servicios
         public ServicioVehiculo()
         {
         }
-        public Vehiculo crearVehiculo()
+        public Vehiculo crearVehiculo(List<Vehiculo>_vehiculos)
         {
+            ServicioMarca sm = new ServicioMarca();
+            ServicioSegmento ss = new ServicioSegmento();
+            ServicioCombustible sc = new ServicioCombustible();
+            List<string> listaMarcas = cargarArchivoEnLista("listaMarcas.txt");
+
            Vehiculo vehiculo1 = new Vehiculo();
+            if (_vehiculos.Count == 0)
+            {
+                vehiculo1.Id_vehiculo = 1;
+            }
+            else
+            {
+                vehiculo1.Id_vehiculo = _vehiculos[_vehiculos.Count - 1].Id_vehiculo + 1;
+            }
+
+            Console.WriteLine("Elija Marca");
+            //int id_provincia = mostrarMenuInteractivo(marcas);
+            Console.Clear();
+
+
+
+
+
 
             return vehiculo1;
         }
@@ -73,27 +95,27 @@ namespace FinalLaboratorioII.servicios
 
             return v;
         }
-        public List<string> cargarVehiculoEnLista()
-        {
-            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
-            Vehiculo v = crearVehiculo();
-            string cantTotal = "";
-            int numAux = 0;
-            if (lista.Count== 0) {
-                lista.Add(v.ToString());
-                cantTotal = "Cant:;" + lista.Count + ";";
-                lista.Add(cantTotal);
-            }
-            else
-            {
-                string[] n = lista[lista.Count - 1].Split(";");
-                string n2 = n[1];
-                numAux = int.Parse(n2) + 1;
-                lista[lista.Count - 1] = v.ToString();
-                lista.Add("Cant:;" + numAux+";");
-            }
-            return lista;
-        }
+        /*public List<string> cargarVehiculoEnLista()
+          {
+              List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
+              Vehiculo v = crearVehiculo();
+              string cantTotal = "";
+              int numAux = 0;
+              if (lista.Count== 0) {
+                  lista.Add(v.ToString());
+                  cantTotal = "Cant:;" + lista.Count + ";";
+                  lista.Add(cantTotal);
+              }
+              else
+              {
+                  string[] n = lista[lista.Count - 1].Split(";");
+                  string n2 = n[1];
+                  numAux = int.Parse(n2) + 1;
+                  lista[lista.Count - 1] = v.ToString();
+                  lista.Add("Cant:;" + numAux+";");
+              }
+              return lista;
+          } */
         public void  cargarListaEnArchivo(List<string>lista)
         {
             FileStream _archivo = new FileStream("listaVehiculos.txt", FileMode.Open);

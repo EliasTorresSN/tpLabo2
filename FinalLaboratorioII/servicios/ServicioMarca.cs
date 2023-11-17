@@ -1,27 +1,26 @@
 ﻿using FinalLaboratorioII.entidades;
 using FinalLaboratorioII.utilidades;
-using System.IO;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-
 
 namespace FinalLaboratorioII.servicios
 {
-    internal class ServicioLocalidad
+    internal class ServicioMarca
     {
 
-        public ServicioLocalidad() { }
-        public void menuLocalidades()
+
+        public ServicioMarca(){}
+        public void menuMarcas()
         {
-            List<string> listaLocalidades = cargarArchivoEnLista("listaLocalidades.txt");
-           
+            List<string> listaMarcas = cargarArchivoEnLista("listaMarcas.txt");
+
             Console.CursorVisible = false;
-            string[] opciones = { "AGREGAR LOCALIDAD", "MOSTRAR LOCALIDADES" };
+            string[] opciones = { "AGREGAR MARCA", "MOSTRAR MARCAS" };
             int opcionElegida = 0;
 
             while (true)
             {
-                List<Localidad> localidades = convertirListaALocalidad(listaLocalidades);
+                List<Marca> marcas= convertirListaAMarca(listaMarcas);
                 Console.Clear();
                 for (int i = 0; i < opciones.Length; i++)
                 {
@@ -47,17 +46,17 @@ namespace FinalLaboratorioII.servicios
                     case ConsoleKey.Enter:
                         if (opcionElegida == 0)
                         {
-                           
-                            Localidad localidad1 = crearLocalidad(localidades);
-                            localidades.Add(localidad1);
-                            List<string> localidadesString = listaLocalidadAString(localidades);
-                            cargarListaEnArchivo(localidadesString);
+
+                            Marca marca1 = crearMarca(marcas);
+                            marcas.Add(marca1);
+                            List<string> marcasString = listaMarcaAString(marcas);
+                            cargarListaEnArchivo(marcasString);
                         }
                         else if (opcionElegida == 1)
                         {
-                            mostrarLocalidades(localidades);
-                            
-                        }                        
+                            mostrarMarcas(marcas);
+
+                        }
                         else if (opcionElegida == opciones.Length - 1)
                         {
                             Console.Clear();
@@ -68,41 +67,36 @@ namespace FinalLaboratorioII.servicios
                         Menu menu = new Menu();
                         menu.menu();
                         break;
-                   
+
                 }
             }
 
 
         }
         //---------------------------------------------------------------------------------
-        public Localidad crearLocalidad(List<Localidad>_localidades)
+        public Marca crearMarca(List<Marca> _marcas)
         {
-            ServicioProvincia sp = new ServicioProvincia();
-            List<Provincia> lista = sp.crearListaProvincias();
-            Localidad localidad1 = new Localidad();
-
-            Console.WriteLine("Elija provincia");
-            int id_provincia = mostrarMenuInteractivo(lista);
-            Console.Clear();
-            localidad1.Id_provincia = id_provincia;
-            if (_localidades.Count==0)
+            
+           Marca marca = new Marca();
+            if (_marcas.Count == 0)
             {
-                localidad1.Id_localidad = 1;
+                marca.Id_marca = 1;
 
             }
             else
             {
-                localidad1.Id_localidad = _localidades[_localidades.Count - 1].Id_localidad + 1;
+                marca.Id_marca = _marcas[_marcas.Count - 1].Id_marca + 1;
             }
-            Console.WriteLine("Ingrese nombre de localidad");
-            string loc = Console.ReadLine();
-            localidad1.NombreLocalidad = loc;
+            Console.WriteLine("Ingrese Marca");
+            string m = Console.ReadLine();
+            marca.NombreMarca = m;
+            
             Console.Clear();
-            Console.WriteLine("Localidad agregada con éxito");
+            Console.WriteLine("Marca agregada con éxito");
             Console.ReadKey();
-            return localidad1;
+            return marca;
         }
-        public void mostrarLocalidades(List<Localidad> _lista)
+        public void mostrarMarcas(List<Marca> _lista)
         {
             Menu menu = new Menu();
             bool activo = true;
@@ -143,10 +137,10 @@ namespace FinalLaboratorioII.servicios
                         opcionElegida = Math.Min(_lista.Count - 1, opcionElegida + 1);
                         break;
                     case ConsoleKey.Enter:
-                        subMenu(_lista,opcionElegida);
+                        subMenu(_lista, opcionElegida);
                         break;
                     case ConsoleKey.Escape:
-                        menuLocalidades();
+                        menuMarcas();
                         break;
 
 
@@ -154,13 +148,10 @@ namespace FinalLaboratorioII.servicios
             }
             Console.ReadKey();
         }
-        public Localidad actualizarLocalidad(Localidad _localidad, List<Localidad>_lista)
+        public Marca actualizarMarca(Marca _marca, List<Marca> _lista)
         {
-                        
-
-            string[] atributos= {"ID_PROVINCIA","NOMBRE","SALIR"};
+            string[] atributos = { "MARCA", "SALIR" };
             int c = 0;
-
             Console.CursorVisible = false;
             int opcionElegida = 0;
 
@@ -191,121 +182,34 @@ namespace FinalLaboratorioII.servicios
                         break;
                     case ConsoleKey.Enter:
 
-                        if (opcionElegida==0)
+                        if (opcionElegida == 0)
                         {
                             Console.Clear();
-                            Console.WriteLine("INGRESE NUEVA PROVINCIA");
-
-                            ServicioProvincia sp = new ServicioProvincia();
-                            List<Provincia> lista = sp.crearListaProvincias();
-                            int id = mostrarMenuInteractivo(lista);
-                            _localidad.Id_provincia = id;
-                            c = 1;
-                        }
-                        else if (opcionElegida==1)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("INGRESE NUEVO NOMBRE");
-                            string loc = Console.ReadLine();
-                            _localidad.NombreLocalidad = loc;
+                            Console.WriteLine("INGRESE MARCA");
+                            string m = Console.ReadLine();
+                            _marca.NombreMarca = m;
                             c = 1;
                         }
                         else
                         {
                             Console.Clear();
-                            if (c!=0){Console.WriteLine("DATOS MODIFICADOS CON ÉXITO");}                            
-                            else { Console.WriteLine("NO SE MODIFICÓ NINGÚN DATO");}
+                            if (c != 0) { Console.WriteLine("DATOS MODIFICADOS CON ÉXITO"); }
+                            else { Console.WriteLine("NO SE MODIFICÓ NINGÚN DATO"); }
                         }
                         Console.ReadKey();
-                        return _localidad;
+                        return _marca;
                 }
             }
         }
-        public List<Localidad> eliminarLocalidad(Localidad _localidad, List<Localidad>_localidades)
+        public List<Marca> eliminarMarca(Marca _marca, List<Marca> _marcas)
         {
-            _localidades.Remove(_localidad);
+            _marcas.Remove(_marca);
             Console.WriteLine("ÍTEM ELIMINADO");
             Console.ReadKey();
-            return _localidades;
+            return _marcas;
         }
-        //---------------------------------------------------------------------------------
-        public int mostrarMenuInteractivo(List<Localidad> lista)
-        {            
-            Console.Clear();            
-            Console.CursorVisible = false;
-            int opcionElegida = 0;
-
-            while (true)
-            {
-                Console.Clear();
-
-                for (int i = 0; i < lista.Count; i++)
-                {
-
-                    if (i == opcionElegida)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.BackgroundColor = ConsoleColor.White;
-                    }
-                    Console.WriteLine(lista[i]);
-                    Console.ResetColor();
-                }
-
-                var key = Console.ReadKey().Key;
-
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:
-                        opcionElegida = Math.Max(0, opcionElegida - 1);
-                        break;
-                    case ConsoleKey.DownArrow:
-                        opcionElegida = Math.Min(lista.Count- 1, opcionElegida + 1);
-                        break;
-                    case ConsoleKey.Enter:
-                       int res = opcionElegida;
-                    return res;
-                }
-            }
-        }
-        public int mostrarMenuInteractivo(List<Provincia> lista)
-        {
-            Console.Clear();
-            Console.WriteLine("Elija provincia");
-            Console.CursorVisible = false;
-            int opcionElegida = 0;
-
-            while (true)
-            {
-                Console.Clear();
-                for (int i = 0; i < lista.Count; i++)
-                {
-                   
-                    if (i == opcionElegida)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.BackgroundColor = ConsoleColor.White;
-                    }
-                    Console.WriteLine(lista[i].NombreProvincia);
-                    Console.ResetColor();
-                }
-
-                var key = Console.ReadKey().Key;
-
-                switch (key)
-                {
-                    case ConsoleKey.UpArrow:
-                        opcionElegida = Math.Max(0, opcionElegida - 1);
-                        break;
-                    case ConsoleKey.DownArrow:
-                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
-                        break;
-                    case ConsoleKey.Enter:
-                       int res = opcionElegida;
-                        return res;
-                }
-            }
-        }
-        public void subMenu(List<Localidad>_lista,int _opcionElegida)
+        //--------------------------------------------------------------------------------
+        public void subMenu(List<Marca>_lista,int _opcionElegida)
         {
             bool subMenuActivo = true;
             int opcionSubMenu = 0;
@@ -314,7 +218,7 @@ namespace FinalLaboratorioII.servicios
             while (subMenuActivo)
             {
                 Console.Clear();
-                Console.WriteLine("LOCALIDAD: " + _lista[_opcionElegida]);
+                Console.WriteLine("MARCA: " + _lista[_opcionElegida]);
                 Console.WriteLine("SELECCIONE:");
                 for (int i = 0; i < opciones.Length; i++)
                 {
@@ -340,19 +244,19 @@ namespace FinalLaboratorioII.servicios
                         opcionSubMenu = Math.Min(1, opcionSubMenu + 1);
                         break;
                     case ConsoleKey.Enter:
-                        Localidad l = _lista[_opcionElegida];
+                        Marca m = _lista[_opcionElegida];
                         Console.Clear();
                         switch (opcionSubMenu)
                         {
                             case 0:
                                
-                                Localidad aux = actualizarLocalidad(l,_lista);
+                                Marca aux = actualizarMarca(m,_lista);
                                 _lista[_opcionElegida] = aux;
-                                cargarListaEnArchivo(listaLocalidadAString(_lista));
+                                cargarListaEnArchivo(listaMarcaAString(_lista));
                                 break;
                             case 1:
-                                _lista = eliminarLocalidad(l, _lista);
-                                cargarListaEnArchivo(listaLocalidadAString(_lista));
+                                _lista = eliminarMarca(m, _lista);
+                                cargarListaEnArchivo(listaMarcaAString(_lista));
                                 break;
                         }
                         subMenuActivo = false;
@@ -363,55 +267,57 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
+
         //---------------------------------------------------------------------------------
-        List<Localidad> convertirListaALocalidad(List<string> lista)
+        List<Marca> convertirListaAMarca(List<string> lista)
         {
-            List<Localidad> localidades = new List<Localidad>();
-            string[] localidadString;
+            List<Marca> marcas= new List<Marca>();
+            string[] marcaString;
             for (int i = 0; i < lista.Count; i++)
             {
-                localidadString = lista[i].Split(';');
-                localidades.Add(elementoStringALocalidad(localidadString));
+                marcaString = lista[i].Split(';');
+                marcaString = lista[i].Split(';');
+                marcas.Add(elementoStringAMarca(marcaString));
             }
-            return localidades;
+            return marcas;
         }
-        public Localidad elementoStringALocalidad(string[] _localidad)
+        public Marca elementoStringAMarca(string[] _marca)
         {
-            Localidad l = new Localidad();
-            string[] atributos = new string[3];
+            Marca m = new Marca();
+            string[] atributos = new string[2];
             int cont = 0;
-            for (int i = 0; i < _localidad.Length; i++)
+            for (int i = 0; i < _marca.Length; i++)
             {
                 if (i % 2 == 1)
                 {
-                    atributos[cont] = _localidad[i];
+                    atributos[cont] = _marca[i];
                     cont++;
                 }
-                if (cont>3)
+                if (cont > 2)
                 {
                     cont = 0;
                 }
             }
 
-            l.Id_localidad = int.Parse(atributos[0]);
-            l.Id_provincia = int.Parse(atributos[1]);
-            l.NombreLocalidad = atributos[2];
-           
-            return l;
+            m.Id_marca = int.Parse(atributos[0]);
+            m.NombreMarca= atributos[1];
+
+            return m;
         }
-        public List<string> listaLocalidadAString(List<Localidad>_lista)
+        public List<string> listaMarcaAString(List<Marca> _lista)
         {
-            List<string>lista = new List<string>();
+            List<string> lista = new List<string>();
             foreach (var item in _lista)
             {
-                lista.Add($"ID_LOCALIDAD:;{item.Id_localidad};ID_PROVINCIA:;{item.Id_provincia};LOCALIDAD:;{item.NombreLocalidad}");
+                lista.Add($"ID_MARCA:;{item.Id_marca};MARCA:;{item.NombreMarca}");
             }
             return lista;
         }
+
         //--------------------------------------------------------------------------------
         public List<string> cargarArchivoEnLista(string _ruta)
         {
-            FileStream _archivo = new FileStream(_ruta, FileMode.Open);            
+            FileStream _archivo = new FileStream(_ruta, FileMode.Open);
             List<string> lista = new List<string>();
             using (StreamReader reader = new StreamReader(_archivo))
             {
@@ -425,7 +331,7 @@ namespace FinalLaboratorioII.servicios
         }
         public void cargarListaEnArchivo(List<string> _lista)
         {
-            FileStream archivo = new FileStream("listaLocalidades.txt", FileMode.Create);
+            FileStream archivo = new FileStream("listaMarcas.txt", FileMode.Create);
 
             using (StreamWriter writer = new StreamWriter(archivo))
             {
@@ -435,7 +341,6 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
-
 
     }
 }

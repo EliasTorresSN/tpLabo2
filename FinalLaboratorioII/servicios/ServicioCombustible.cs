@@ -15,14 +15,17 @@ namespace FinalLaboratorioII.servicios
         public List<Combustible> crearListaCombustible()
         {
             List<Combustible>combustibles = new List<Combustible>();
-            combustibles.Add(new Combustible(1,"Nafta"));
-            combustibles.Add(new Combustible(2,"Diesel"));
-            combustibles.Add(new Combustible(3,"GNC"));
-            combustibles.Add(new Combustible(4,"Eléctrico"));
+            Combustible nafta= new Combustible(1, "Nafta");
+            Combustible diesel = new Combustible(2, "Diesel");
+            Combustible gnc = new Combustible(3, "GNC");
+            Combustible electrico = new Combustible(4,"Eléctrico");
+
+            combustibles.Add(nafta);
+            combustibles.Add(diesel);
+            combustibles.Add(gnc);
+            combustibles.Add(electrico);
             return combustibles;
         }
-
-
 
 
     }

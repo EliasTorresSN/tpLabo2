@@ -14,17 +14,26 @@ namespace FinalLaboratorioII.entidades
 
         public Marca(int id_marca, string nombreMarca)
         {
-            this.id_marca = id_marca;
-            this.nombreMarca = nombreMarca ?? throw new ArgumentNullException(nameof(nombreMarca));
+            this.Id_marca = id_marca;
+            this.NombreMarca = nombreMarca ?? throw new ArgumentNullException(nameof(nombreMarca));
         }
-         
+
+        public int Id_marca
+        {
+            get { return this.id_marca; }
+            set { this.id_marca = value; }
+        }
+
         public string NombreMarca
         {
             get { return this.nombreMarca; }set { this.nombreMarca = value;}
         }
 
 
-
+        public override string  ToString()
+        {
+            return $"ID: {this.Id_marca} MARCA: {this.NombreMarca} ";
+        }
 
 
 

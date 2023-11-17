@@ -1,9 +1,4 @@
-﻿using FinalLaboratorioII.entidades;
-using FinalLaboratorioII.entidades.subEntidades;
-using FinalLaboratorioII.servicios;
-using FinalLaboratorioII.utilidades;
-using System.ComponentModel.Design;
-using System.IO;
+﻿using FinalLaboratorioII.utilidades;
 
 namespace FinalLaboratorioII
 {
@@ -13,12 +8,7 @@ namespace FinalLaboratorioII
         {
             Menu menu = new Menu();
             menu.menu();
-
         }
-
-        
-
-
     }
 
 }

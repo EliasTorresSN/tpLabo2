@@ -10,7 +10,7 @@ namespace FinalLaboratorioII.entidades
         public Segmento(int id_segmento, string segmento)
         {
             this.id_segmento = id_segmento;
-            this.tipoSegmento = segmento ?? throw new ArgumentNullException(nameof(segmento));
+            this.tipoSegmento = segmento;
         }
         public int Id_segmento
         {
