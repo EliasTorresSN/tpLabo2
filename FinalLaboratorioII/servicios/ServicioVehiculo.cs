@@ -11,6 +11,10 @@ namespace FinalLaboratorioII.servicios
         public ServicioVehiculo()
         {
         }
+
+
+
+        //---------------------------------------------------------------------------------
         public Vehiculo crearVehiculo(List<Vehiculo>_vehiculos)
         {
             Menu menu = new Menu();
@@ -23,6 +27,7 @@ namespace FinalLaboratorioII.servicios
             List<Combustible> combustibles = sc.crearListaCombustible();
             string[]colores = { "Amarillo","Azul","Blanco","Gris","Marrón","Naranja","Negro","Rojo","Rosa","Verde" };
             string cil,dimension,cm;
+            bool valido = false;
 
 
 
@@ -46,35 +51,54 @@ namespace FinalLaboratorioII.servicios
             Console.WriteLine("INGRESE AÑO");
             string anio = Console.ReadLine();
             vehiculo1.Anio = anio;
-            Console.WriteLine("INGRESE KILÓMETROS");
-            string km = Console.ReadLine();
-            vehiculo1.Kilometros = km;
+            do
+            {
+                Console.WriteLine("INGRESE KILÓMETROS");
+
+                string km = Console.ReadLine();
+                valido = validarNumeros(km);
+                if (valido)
+                {
+                    vehiculo1.Kilometros = km;
+
+                }
+            } while (!valido);
+
+
+            Console.Clear();
             Console.WriteLine("INGRESE PATENTE");
             string patente = Console.ReadLine();
             vehiculo1.Patente = patente;
-
+            Console.Clear();
             Console.WriteLine("ELIJA SEGMENTO");
             int id_seg = ss.mostrarMenuInteractivo(segmentos);
-            Console.Clear();
             vehiculo1.Id_segmento = id_seg + 1;
-
+            Console.Clear();
             Console.WriteLine("ELIJA COMBUSTIBLE");
             int id_comb = sc.mostrarMenuInteractivo(combustibles);
-            Console.Clear();
             vehiculo1.Id_combustible = id_comb + 1;
-
+            Console.Clear();
             Console.WriteLine("ELIJA COLOR");
             int col = menu.mostrarMenuInteractivo(colores);
-            Console.Clear();
             vehiculo1.Color = colores[col];
+            Console.Clear();
+
 
             if (id_seg == 1 || id_seg == 2 || id_seg == 3 || id_seg == 5 || id_seg == 6 || id_seg == 7)
             {
                 if (id_seg == 5 || id_seg == 6 || id_seg == 7)
                 {
-                    Console.WriteLine("INGRESE CILINDRADA");
-                    cil = Console.ReadLine();
-                    vehiculo1.Cilindrada = cil;
+                    do
+                    {
+                        Console.WriteLine("INGRESE CILINDRADA");
+                        cil = Console.ReadLine();
+                        valido = validarNumeros(cil);
+                        if (valido)
+                        {
+                            vehiculo1.Cilindrada = cil;
+                            
+                        }
+                    } while (!valido);
                 }
                 else
                 {
@@ -91,15 +115,34 @@ namespace FinalLaboratorioII.servicios
                 vehiculo1.Cilindrada = "n/d";
                 vehiculo1.Caja_carga = true;
 
-                Console.WriteLine("INGRESE DIMENSION DE CAJA");
-                dimension = Console.ReadLine();
-                vehiculo1.Dimension_caja = $"{dimension} cm3";
+                do
+                {
+                    Console.WriteLine("INGRESE DIMENSION DE CAJA");
+
+                    dimension = Console.ReadLine();
+                    valido = validarNumeros(dimension);
+                    if (valido)
+                    {
+                        vehiculo1.Dimension_caja = $"{dimension} cm3";
+
+                    }
+                } while (!valido);
+                
                 Console.Clear();
+                do
+                {
+                    Console.WriteLine("CARGA MAX");
 
-                Console.WriteLine("CARGA MAX");
-                cm = Console.ReadLine();
-                vehiculo1.Carga_max = $"{cm} kg";
 
+                    cm = Console.ReadLine();
+
+                    valido = validarNumeros(dimension);
+                    if (valido)
+                    {
+                        vehiculo1.Carga_max = $"{cm} kg";
+
+                    }
+                } while (!valido);
 
             }
 
@@ -109,12 +152,25 @@ namespace FinalLaboratorioII.servicios
             vehiculo1.Observaciones= obs;
 
             Console.Clear();
-            Console.WriteLine("INGRESE PRECIO");
-            string precio = Console.ReadLine();
-            vehiculo1.Precio_vta = 0;
+
+            do
+            {
+                Console.WriteLine("INGRESE PRECIO");
+                string precio = Console.ReadLine();
+                valido = validarPrecio(precio);
+
+                if (valido)
+                {
+                    vehiculo1.Precio_vta =double.Parse(precio);
+                }
+            } while (!valido);
 
             return vehiculo1;
         }
+
+        //---------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------
         public List<string> cargarArchivoEnLista(string _ruta)
         {
             FileStream _archivo = new FileStream(_ruta, FileMode.Open);
@@ -768,8 +824,35 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
+        static bool validarPrecio(string _dato)
+        {
+            double precio;
+            try
+            {
+                precio = Double.Parse(_dato);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Ingrese números validos.");
+                return false;
+            }
+            
+            return true;
+        }
 
+        static bool validarNumeros(string _dato)
+        {
+            for (int i = 0; i <_dato.Length; i++)
+            {
+                if ((int)_dato[i] < 48 || (int)_dato[i] > 57)
+                {
+                    Console.WriteLine("Ingrese numeros validos ->");
 
+                    return false;
+                }
+            }
+            return true;
+        }
 
 
 
