@@ -15,9 +15,9 @@ namespace FinalLaboratorioII.servicios
             ServicioMarca sm = new ServicioMarca();
             ServicioSegmento ss = new ServicioSegmento();
             ServicioCombustible sc = new ServicioCombustible();
-            List<string> listaMarcas = cargarArchivoEnLista("listaMarcas.txt");
+            Vehiculo vehiculo1 = new Vehiculo();
+            List<Marca> marcas = sm.convertirListaAMarca(sm.cargarArchivoEnLista("listaMarcas.txt"););
 
-           Vehiculo vehiculo1 = new Vehiculo();
             if (_vehiculos.Count == 0)
             {
                 vehiculo1.Id_vehiculo = 1;
@@ -27,8 +27,12 @@ namespace FinalLaboratorioII.servicios
                 vehiculo1.Id_vehiculo = _vehiculos[_vehiculos.Count - 1].Id_vehiculo + 1;
             }
 
+
+
             Console.WriteLine("Elija Marca");
-            //int id_provincia = mostrarMenuInteractivo(marcas);
+            int id_marca = sm.mostrarMenuInteractivo(marcas);
+            Console.Clear();
+            vehiculo1.Id_marca = id_marca;
             Console.Clear();
 
 

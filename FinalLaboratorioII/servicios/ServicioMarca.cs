@@ -268,15 +268,52 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
+        public int mostrarMenuInteractivo(List<Marca> lista)
+        {
+            Console.Clear();
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
+
+            while (true)
+            {
+                Console.Clear();
+
+                for (int i = 0; i < lista.Count; i++)
+                {
+
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(lista[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        int res = opcionElegida;
+                        return res;
+                }
+            }
+        }
 
         //---------------------------------------------------------------------------------
-        List<Marca> convertirListaAMarca(List<string> lista)
+        public List<Marca> convertirListaAMarca(List<string> lista)
         {
-            List<Marca> marcas= new List<Marca>();
+            List<Marca> marcas = new List<Marca>();
             string[] marcaString;
             for (int i = 0; i < lista.Count; i++)
             {
-                marcaString = lista[i].Split(';');
                 marcaString = lista[i].Split(';');
                 marcas.Add(elementoStringAMarca(marcaString));
             }
