@@ -22,7 +22,9 @@ namespace FinalLaboratorioII.servicios
             List<Segmento> segmentos = ss.crearListaSegmentos();
             List<Combustible> combustibles = sc.crearListaCombustible();
             string[]colores = { "Amarillo","Azul","Blanco","Gris","Marrón","Naranja","Negro","Rojo","Rosa","Verde" };
-            
+            string cil,dimension,cm;
+
+
 
             if (_vehiculos.Count == 0)
             {
@@ -66,58 +68,50 @@ namespace FinalLaboratorioII.servicios
             Console.Clear();
             vehiculo1.Color = colores[col];
 
-            if (id_seg == 1 || id_seg == 2 || id_seg == 3)
+            if (id_seg == 1 || id_seg == 2 || id_seg == 3 || id_seg == 5 || id_seg == 6 || id_seg == 7)
             {
+                if (id_seg == 5 || id_seg == 6 || id_seg == 7)
+                {
+                    Console.WriteLine("INGRESE CILINDRADA");
+                    cil = Console.ReadLine();
+                    vehiculo1.Cilindrada = cil;
+                }
+                else
+                {
+                    vehiculo1.Cilindrada = "n/d";
+                }
+                vehiculo1.Caja_carga = false;
+                vehiculo1.Dimension_caja = "n/d";
+                vehiculo1.Patente = "n/d";
+                Console.Clear();
 
+            }
+            else if (id_seg == 4 || id_seg == 8)
+            {
+                vehiculo1.Cilindrada = "n/d";
+                vehiculo1.Caja_carga = true;
+
+                Console.WriteLine("INGRESE DIMENSION DE CAJA");
+                dimension = Console.ReadLine();
+                vehiculo1.Dimension_caja = $"{dimension} cm3";
+                Console.Clear();
+
+                Console.WriteLine("CARGA MAX");
+                cm = Console.ReadLine();
+                vehiculo1.Carga_max = $"{cm} kg";
 
 
             }
-            else if (id_seg == 4)
-            {
 
-            }
-            else if (id_seg == 5 || id_seg == 6 || id_seg == 7)
-            {
-
-            }
-            else if (id_seg == 8)
-            {
-
-            }
-
-
-
-
-
-
-            Console.WriteLine("INGRESE CILINDRADA");
-            string cil= Console.ReadLine();
-            vehiculo1.Cilindrada = cil;
-            
-            Console.WriteLine("CAJA DE CARGA");
-            string cc = Console.ReadLine();
-            vehiculo1.Caja_carga = false;
-            
-            Console.WriteLine("INGRESE PATENTE");
-            string dimension = Console.ReadLine();
-            vehiculo1.Dimension_caja = dimension;
-            
-            Console.WriteLine("CARGA MAX");
-            string cm = Console.ReadLine();
-            vehiculo1.Patente = cm;
-            
+            Console.Clear();
             Console.WriteLine("INGRESE OBSERVACIONES");
             string obs= Console.ReadLine();
             vehiculo1.Observaciones= obs;
-            
+
+            Console.Clear();
             Console.WriteLine("INGRESE PRECIO");
             string precio = Console.ReadLine();
             vehiculo1.Precio_vta = 0;
-
-
-
-
-
 
             return vehiculo1;
         }
@@ -178,27 +172,7 @@ namespace FinalLaboratorioII.servicios
 
             return v;
         }
-        /*public List<string> cargarVehiculoEnLista()
-          {
-              List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
-              Vehiculo v = crearVehiculo();
-              string cantTotal = "";
-              int numAux = 0;
-              if (lista.Count== 0) {
-                  lista.Add(v.ToString());
-                  cantTotal = "Cant:;" + lista.Count + ";";
-                  lista.Add(cantTotal);
-              }
-              else
-              {
-                  string[] n = lista[lista.Count - 1].Split(";");
-                  string n2 = n[1];
-                  numAux = int.Parse(n2) + 1;
-                  lista[lista.Count - 1] = v.ToString();
-                  lista.Add("Cant:;" + numAux+";");
-              }
-              return lista;
-          } */
+       
         public void  cargarListaEnArchivo(List<string>lista)
         {
             FileStream _archivo = new FileStream("listaVehiculos.txt", FileMode.Open);
@@ -754,79 +728,7 @@ namespace FinalLaboratorioII.servicios
             }
             return res;
         }
-        public void agregarVehiculo(List<Vehiculo>_listaVehiculos)
-        {
-            int id, idMarca, idSegmento, idCombustible;
-            string modelo, anio, patente, kms, color;
-
-            Camion camion = new Camion();
-           
-            Console.WriteLine("Nuevo vehículo");
-            //id_vehiculo
-            id = _listaVehiculos[_listaVehiculos.Count - 1].Id_vehiculo + 1;
-
-            Console.WriteLine("Marca");
-            idMarca = 1;
-            Console.WriteLine("Modelo");
-            string model = Console.ReadLine();
-            Console.WriteLine("Año");
-            string Anio = Console.ReadLine();
-
-            Console.WriteLine("Patente");
-            patente = Console.ReadLine();
-
-            Console.WriteLine("Cantidad de kilometros");
-            kms = Console.ReadLine();
-
-            Console.WriteLine("Combustible");
-            idCombustible = 1;
-
-            Console.WriteLine("Segmento");
-            idSegmento = 1;
-
-            Console.WriteLine("Color");
-            color = Console.ReadLine();
-
-            if (idSegmento == 1 || idSegmento == 2 || idSegmento == 3 )
-            {
-
-
-
-            }
-            else if ( idSegmento == 4)
-            {
-
-            }
-            else if (idSegmento == 5 || idSegmento == 6 || idSegmento == 7)
-            {
-
-            }
-            else if (idSegmento == 8)
-            {
-
-            }
-
-
-
-
-            //Console.WriteLine("id_combustible");
-            //vehiculo1.Id_combustible = 1;
-
-            //Console.WriteLine("Observaciones:");
-            //vehiculo1.Observaciones = Console.ReadLine();
-
-            //Console.WriteLine("Precio:");
-            //vehiculo1.Precio_vta = float.Parse(Console.ReadLine());
-
-
-
-        }
-
-
-
-
-
-
+        
 
         public int mostrarMenuInteractivo(List<Segmento> lista)
         {
