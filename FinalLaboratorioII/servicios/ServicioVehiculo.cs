@@ -49,13 +49,34 @@ namespace FinalLaboratorioII.servicios
 
             //ID SEG
             //id_comb
-            //color
-            //cilindrada
-            //caja carga
-            //dimensio
-            //cargamax
-            //observacion
-            //preciovta
+
+            Console.WriteLine("INGRESE COLOR");
+            string color = Console.ReadLine();
+            vehiculo1.Color = color;
+            
+            Console.WriteLine("INGRESE CILINDRADA");
+            string cil= Console.ReadLine();
+            vehiculo1.Cilindrada = cil;
+            
+            Console.WriteLine("CAJA DE CARGA");
+            string cc = Console.ReadLine();
+            vehiculo1.Caja_carga = false;
+            
+            Console.WriteLine("INGRESE PATENTE");
+            string dimension = Console.ReadLine();
+            vehiculo1.Dimension_caja = dimension;
+            
+            Console.WriteLine("CARGA MAX");
+            string cm = Console.ReadLine();
+            vehiculo1.Patente = cm;
+            
+            Console.WriteLine("INGRESE OBSERVACIONES");
+            string obs= Console.ReadLine();
+            vehiculo1.Observaciones= obs;
+            
+            Console.WriteLine("INGRESE PRECIO");
+            string precio = Console.ReadLine();
+            vehiculo1.Precio_vta = 0;
 
 
 
