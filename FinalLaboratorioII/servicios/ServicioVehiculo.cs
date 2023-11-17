@@ -91,7 +91,7 @@ namespace FinalLaboratorioII.servicios
             List<Segmento> segmentos = ss.crearListaSegmentos();
             List<Combustible> combustibles = sc.crearListaCombustible();
             string[]colores = { "Amarillo","Azul","Blanco","Gris","Marrón","Naranja","Negro","Rojo","Rosa","Verde" };
-            string cil,dimension,cm;
+            string cil,dimension,cm,anio;
             bool valido = false;
 
 
@@ -113,9 +113,19 @@ namespace FinalLaboratorioII.servicios
             Console.WriteLine("INGRESE MODELO");
             string mod = Console.ReadLine();
             vehiculo1.Modelo = mod;
-            Console.WriteLine("INGRESE AÑO");
-            string anio = Console.ReadLine();
-            vehiculo1.Anio = anio;
+            do
+            {
+                Console.WriteLine("INGRESE AÑO");
+
+                 anio = Console.ReadLine();
+                valido = validarNumeros(anio);
+                if (valido)
+                {
+                    vehiculo1.Anio = anio;
+
+                }
+            } while (!valido);
+           
             do
             {
                 Console.WriteLine("INGRESE KILÓMETROS");
@@ -147,7 +157,6 @@ namespace FinalLaboratorioII.servicios
             int col = menu.mostrarMenuInteractivo(colores);
             vehiculo1.Color = colores[col];
             Console.Clear();
-
 
             if (id_seg == 1 || id_seg == 2 || id_seg == 3 || id_seg == 5 || id_seg == 6 || id_seg == 7)
             {
@@ -201,7 +210,7 @@ namespace FinalLaboratorioII.servicios
 
                     cm = Console.ReadLine();
 
-                    valido = validarNumeros(dimension);
+                    valido = validarNumeros(cm);
                     if (valido)
                     {
                         vehiculo1.Carga_max = $"{cm} kg";
@@ -283,73 +292,244 @@ namespace FinalLaboratorioII.servicios
             }
             Console.ReadKey();
         }
-
-        public void actualizarVehiculo(int opcion)
+        public Vehiculo actualizarVehiculo(Vehiculo _vehiculo, List<Vehiculo> _lista)
         {
-            Console.Clear();
-            Console.CursorVisible = false;
-            List<string> lista = cargarArchivoEnLista("listaVehiculos.txt");
-            string[] opciones = { "Si", "No" };
-            int opcionElegida = 0;
-            bool subMenu = true;
+            Menu menu = new Menu();
+            ServicioMarca sm = new ServicioMarca();
+            ServicioSegmento ss = new ServicioSegmento();
+            ServicioCombustible sc = new ServicioCombustible();
+            List<Marca> marcas = sm.convertirListaAMarca(sm.cargarArchivoEnLista("listaMarcas.txt"));
+            List<Segmento> segmentos = ss.crearListaSegmentos();
+            List<Combustible> combustibles = sc.crearListaCombustible();
+            string[] colores = { "Amarillo", "Azul", "Blanco", "Gris", "Marrón", "Naranja", "Negro", "Rojo", "Rosa", "Verde" };
+            string cil, dimension, cm, anio;
+            bool valido = false;
 
-            if (lista.Count > 1)
+            string[] atributos = { "MARCA", "MODELO", "AÑO", "KILOMETROS", "PATENTE", "SEGMENTO", "COMBUSTIBLE",
+                "COLOR", "CILINDRADA", "CAJA_CARGA", "DIMENSION_CAJA", "CARGA_MAX", "OBSERVACIONES", "PRECIO", "SALIR" };
+            int c = 0;
+
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
+
+            while (true)
             {
                 Console.Clear();
-                Console.WriteLine("¿Modificar item seleccionado?");
+                Console.WriteLine("ATRIBUTO A MODIFICAR");
 
-                while (subMenu)
+                if (_vehiculo.Id_segmento == 1 || _vehiculo.Id_segmento == 2 || _vehiculo.Id_segmento == 3 || _vehiculo.Id_segmento == 5 || _vehiculo.Id_segmento == 6 || _vehiculo.Id_segmento == 7)
                 {
-                    Console.Clear();
-                    for (int i = 0; i < opciones.Length; i++)
+
+                    for (int i = 0; i < 8; i++)
                     {
+
                         if (i == opcionElegida)
                         {
                             Console.ForegroundColor = ConsoleColor.Black;
                             Console.BackgroundColor = ConsoleColor.White;
                         }
-                        Console.WriteLine(opciones[i]);
+                        Console.WriteLine(atributos[i]);
                         Console.ResetColor();
                     }
 
-                    var subMenuKey = Console.ReadKey().Key;
 
-                    switch (subMenuKey)
+                    if (_vehiculo.Id_segmento == 5 || _vehiculo.Id_segmento == 6 || _vehiculo.Id_segmento == 7)
                     {
-                        case ConsoleKey.UpArrow:
-                            opcionElegida = Math.Max(0, opcionElegida - 1);
-                            break;
+                        for (int i = 0; i < 9; i++)
+                        {
 
-                        case ConsoleKey.DownArrow:
-                            opcionElegida = Math.Min(1, opcionElegida + 1);
-                            break;
-
-                        case ConsoleKey.Enter:
-                            Console.Clear();
-                            switch (opcionElegida)
+                            if (i == opcionElegida)
                             {
-                                case 0:
-                                    Vehiculo v = vehiculoParaActualizar(lista, opcion);
-
-
-                                    FileStream archivoNuevo = new FileStream("listaVehiculos.txt", FileMode.Create);
-                                    archivoNuevo.Close();
-                                    cargarListaEnArchivo(lista);
-                                    Console.WriteLine("Item modificado");
-                                    Console.ReadKey();
-                                    break;
-                                case 1:
-                                    Console.WriteLine("No se modificó el ítem");
-                                    Console.ReadKey();
-                                    break;
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.BackgroundColor = ConsoleColor.White;
                             }
-                            subMenu = false;
-                            break;
+                            Console.WriteLine(atributos[i]);
+                            Console.ResetColor();
+                        }
 
-                        case ConsoleKey.Escape:
-                            subMenu = false;
-                            break;
                     }
+                    else
+                    {
+                        for (int i = 0; i < 8; i++)
+                        {
+
+                            if (i == opcionElegida)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Black;
+                                Console.BackgroundColor = ConsoleColor.White;
+                            }
+                            Console.WriteLine(atributos[i]);
+                            Console.ResetColor();
+                        }
+                    }
+
+                    Console.Clear();
+
+                }
+                else if (_vehiculo.Id_segmento == 4 || _vehiculo.Id_segmento == 8)
+                {
+                    for (int i = 0; i < atributos.Length; i++)
+                    {
+                        if (i==8)
+                        {
+                            i = 9;
+                        }
+                        if (i == opcionElegida)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.White;
+                        }
+                        Console.WriteLine(atributos[i]);
+                        Console.ResetColor();
+                    }
+
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(atributos.Length - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        switch (opcionElegida)
+                        {
+                            case 0:
+                                Console.WriteLine("ELIJA MARCA");
+                                int id_marca = sm.mostrarMenuInteractivo(marcas);
+                                Console.Clear();
+                                _vehiculo.Id_marca = id_marca + 1;
+                                Console.Clear(); ;
+                                break;
+                            case 1:
+                                Console.WriteLine("INGRESE MODELO");
+                                string mod = Console.ReadLine();
+                                _vehiculo.Modelo = mod; ;
+                                break;
+                            case 2:
+                                do
+                                {
+                                    Console.WriteLine("INGRESE AÑO");
+
+                                    anio = Console.ReadLine();
+                                    valido = validarNumeros(anio);
+                                    if (valido)
+                                    {
+                                        _vehiculo.Anio = anio;
+
+                                    }
+                                } while (!valido); ;
+                                break;
+                            case 3:
+                                do
+                                {
+                                    Console.WriteLine("INGRESE KILÓMETROS");
+
+                                    string km = Console.ReadLine();
+                                    valido = validarNumeros(km);
+                                    if (valido)
+                                    {
+                                        _vehiculo.Kilometros = km;
+
+                                    }
+                                } while (!valido); ;
+                                break;
+                            case 4:
+                                Console.WriteLine("INGRESE PATENTE");
+                                string patente = Console.ReadLine();
+                                _vehiculo.Patente = patente;
+                                Console.Clear(); ;
+
+                                break;
+                            case 5:
+                                Console.Clear();
+                                Console.WriteLine("ELIJA SEGMENTO");
+                                int id_seg = ss.mostrarMenuInteractivo(segmentos);
+                                _vehiculo.Id_segmento = id_seg + 1; ;
+                                break;
+                            case 6:
+                                Console.Clear();
+                                Console.WriteLine("ELIJA COMBUSTIBLE");
+                                int id_comb = sc.mostrarMenuInteractivo(combustibles);
+                                _vehiculo.Id_combustible = id_comb + 1; ;
+                                break;
+                            case 7:
+                                Console.WriteLine("ELIJA COLOR");
+                                int col = menu.mostrarMenuInteractivo(colores);
+                                _vehiculo.Color = colores[col];
+                                Console.Clear(); ;
+                                break;
+                            case 8:
+                                do
+                                {
+                                    Console.WriteLine("INGRESE CILINDRADA");
+                                    cil = Console.ReadLine();
+                                    valido = validarNumeros(cil);
+                                    if (valido)
+                                    {
+                                        _vehiculo.Cilindrada = cil;
+
+                                    }
+                                } while (!valido);
+                                Console.Clear();
+                                break;
+                            case 9:
+                                _vehiculo.Caja_carga = true;
+                                break;
+                            case 10:
+                                do
+                                {
+                                    Console.WriteLine("INGRESE DIMENSION DE CAJA");
+
+                                    dimension = Console.ReadLine();
+                                    valido = validarNumeros(dimension);
+                                    if (valido)
+                                    {
+                                        _vehiculo.Dimension_caja = $"{dimension} cm3";
+
+                                    }
+                                } while (!valido); ; break;
+                            case 11:
+                                do
+                                {
+                                    Console.WriteLine("CARGA MAX");
+
+
+                                    cm = Console.ReadLine();
+
+                                    valido = validarNumeros(cm);
+                                    if (valido)
+                                    {
+                                        _vehiculo.Carga_max = $"{cm} kg";
+
+                                    }
+                                } while (!valido); ; break;
+                            case 12:
+                                Console.WriteLine("INGRESE OBSERVACIONES");
+                                string obs = Console.ReadLine();
+                                _vehiculo.Observaciones = obs; ; break;
+                            case 13:
+                                do
+                                {
+                                    Console.WriteLine("INGRESE PRECIO");
+                                    string precio = Console.ReadLine();
+                                    valido = validarPrecio(precio);
+
+                                    if (valido)
+                                    {
+                                        _vehiculo.Precio_vta = double.Parse(precio);
+                                    }
+                                } while (!valido); ; break;
+
+                        }
+
+
+                        Console.ReadKey();
+                        return _vehiculo;
                 }
             }
         }
@@ -555,7 +735,6 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
-
         static bool validarPrecio(string _dato)
         {
             double precio;
