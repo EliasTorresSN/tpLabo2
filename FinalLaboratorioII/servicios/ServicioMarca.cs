@@ -46,11 +46,12 @@ namespace FinalLaboratorioII.servicios
                     case ConsoleKey.Enter:
                         if (opcionElegida == 0)
                         {
-
+                            Console.Clear();
                             Marca marca1 = crearMarca(marcas);
                             marcas.Add(marca1);
                             List<string> marcasString = listaMarcaAString(marcas);
                             cargarListaEnArchivo(marcasString);
+                            return;
                         }
                         else if (opcionElegida == 1)
                         {
@@ -218,7 +219,7 @@ namespace FinalLaboratorioII.servicios
             while (subMenuActivo)
             {
                 Console.Clear();
-                Console.WriteLine("MARCA: " + _lista[_opcionElegida]);
+
                 Console.WriteLine("SELECCIONE:");
                 for (int i = 0; i < opciones.Length; i++)
                 {

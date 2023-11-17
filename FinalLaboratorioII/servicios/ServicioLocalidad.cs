@@ -52,6 +52,7 @@ namespace FinalLaboratorioII.servicios
                             localidades.Add(localidad1);
                             List<string> localidadesString = listaLocalidadAString(localidades);
                             cargarListaEnArchivo(localidadesString);
+                            return;
                         }
                         else if (opcionElegida == 1)
                         {
@@ -315,7 +316,6 @@ namespace FinalLaboratorioII.servicios
             {
                 Console.Clear();
                 Console.WriteLine("LOCALIDAD: " + _lista[_opcionElegida]);
-                Console.WriteLine("SELECCIONE:");
                 for (int i = 0; i < opciones.Length; i++)
                 {
                     
