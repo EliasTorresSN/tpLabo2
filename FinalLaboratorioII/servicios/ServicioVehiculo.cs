@@ -533,6 +533,14 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
+        public List<Vehiculo> eliminarVehiculo(Vehiculo _vehiculo, List<Vehiculo> _vehiculos)
+        {
+            _vehiculos.Remove(_vehiculo);
+            Console.WriteLine("ÍTEM ELIMINADO");
+            Console.ReadKey();
+            return _vehiculos;
+        }
+
 
         //---------------------------------------------------------------------------------
         public List<Vehiculo> convertirListaAVehiculo(List<string> lista)
@@ -723,7 +731,7 @@ namespace FinalLaboratorioII.servicios
                                 cargarListaEnArchivo(listaVehiculoAString(_lista));
                                 break;
                             case 1:
-                                _lista = eliminarVehiculo(l, _lista);
+                                _lista = eliminarVehiculo(v, _lista);
                                 cargarListaEnArchivo(listaVehiculoAString(_lista));
                                 break;
                         }
