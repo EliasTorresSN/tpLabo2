@@ -17,14 +17,14 @@ namespace FinalLaboratorioII.servicios
         public void menuLocalidades()
         {
             List<string> listaLocalidades = cargarArchivoEnLista("listaLocalidades.txt");
-            List<Localidad> localidades = convertirListaALocalidad(listaLocalidades);
-             
+           
             Console.CursorVisible = false;
             string[] opciones = { "AGREGAR LOCALIDAD", "MOSTRAR LOCALIDADES" };
             int opcionElegida = 0;
 
             while (true)
             {
+                List<Localidad> localidades = convertirListaALocalidad(listaLocalidades);
                 Console.Clear();
                 for (int i = 0; i < opciones.Length; i++)
                 {
@@ -50,14 +50,16 @@ namespace FinalLaboratorioII.servicios
                     case ConsoleKey.Enter:
                         if (opcionElegida == 0)
                         {
+                           
                             Localidad localidad1 = crearLocalidad(localidades);
                             localidades.Add(localidad1);
-                            cargarListaEnArchivo(listaLocalidadAString(localidades));
+                            List<string> localidadesString = listaLocalidadAString(localidades);
+                            cargarListaEnArchivo(localidadesString);
                         }
                         else if (opcionElegida == 1)
                         {
                             mostrarLocalidades(localidades);
-                            cargarListaEnArchivo(listaLocalidadAString(localidades));
+                            
                         }                        
                         else if (opcionElegida == opciones.Length - 1)
                         {
@@ -222,11 +224,12 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
-        public void eliminarLocalidad(Localidad _localidad, List<Localidad>_localidades)
+        public List<Localidad> eliminarLocalidad(Localidad _localidad, List<Localidad>_localidades)
         {
             _localidades.Remove(_localidad);
             Console.WriteLine("ÍTEM ELIMINADO");
             Console.ReadKey();
+            return _localidades;
         }
         //---------------------------------------------------------------------------------
         public int mostrarMenuInteractivo(List<Localidad> lista)
@@ -351,7 +354,7 @@ namespace FinalLaboratorioII.servicios
                                 cargarListaEnArchivo(listaLocalidadAString(_lista));
                                 break;
                             case 1:
-                                eliminarLocalidad(l, _lista);
+                                _lista = eliminarLocalidad(l, _lista);
                                 cargarListaEnArchivo(listaLocalidadAString(_lista));
                                 break;
                         }
@@ -404,15 +407,14 @@ namespace FinalLaboratorioII.servicios
             List<string>lista = new List<string>();
             foreach (var item in _lista)
             {
-                lista.Add($"ID_LOCALIDAD:;{item.Id_localidad};ID_PROVINCIA:;{item.Id_provincia};LOCALIDAD:;{item.NombreLocalidad};");
+                lista.Add($"ID_LOCALIDAD:;{item.Id_localidad};ID_PROVINCIA:;{item.Id_provincia};LOCALIDAD:;{item.NombreLocalidad}");
             }
             return lista;
         }
         //--------------------------------------------------------------------------------
         public List<string> cargarArchivoEnLista(string _ruta)
         {
-            FileStream _archivo = new FileStream(_ruta, FileMode.Open);
-            
+            FileStream _archivo = new FileStream(_ruta, FileMode.Open);            
             List<string> lista = new List<string>();
             using (StreamReader reader = new StreamReader(_archivo))
             {
@@ -424,13 +426,13 @@ namespace FinalLaboratorioII.servicios
             }
             return lista;
         }
-        public void cargarListaEnArchivo(List<string> lista)
+        public void cargarListaEnArchivo(List<string> _lista)
         {
-            FileStream _archivo = new FileStream("listaLocalidades.txt", FileMode.Open);
+            FileStream archivo = new FileStream("listaLocalidades.txt", FileMode.Create);
 
-            using (StreamWriter writer = new StreamWriter(_archivo))
+            using (StreamWriter writer = new StreamWriter(archivo))
             {
-                foreach (string item in lista)
+                foreach (string item in _lista)
                 {
                     writer.WriteLine(item);
                 }
