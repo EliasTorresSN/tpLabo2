@@ -72,7 +72,7 @@ namespace FinalLaboratorioII.utilidades
                             return;
                         }
                         Console.Clear();
-                        Console.WriteLine($"Volviendo al menu principal");
+                        Console.WriteLine("Volviendo al menu principal");
                         Console.ReadKey();
                         break;
                     case ConsoleKey.Escape:

@@ -1,0 +1,2 @@
+ID_LOCALIDAD:;3;ID_PROVINCIA:;1;LOCALIDAD:;Catamarca city;
+D:;3;ID_PROVINCIA:;1;LOCALIDAD:;Catamarca city;
