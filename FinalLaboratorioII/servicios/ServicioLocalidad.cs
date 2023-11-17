@@ -13,6 +13,7 @@ namespace FinalLaboratorioII.servicios
         public ServicioLocalidad() { }
         public void menuLocalidades()
         {
+            Menu menu1 = new Menu();
             List<string> listaLocalidades = cargarArchivoEnLista("listaLocalidades.txt");
            
             Console.CursorVisible = false;
@@ -52,6 +53,7 @@ namespace FinalLaboratorioII.servicios
                             localidades.Add(localidad1);
                             List<string> localidadesString = listaLocalidadAString(localidades);
                             cargarListaEnArchivo(localidadesString);
+                            menu1.menu();
                             return;
                         }
                         else if (opcionElegida == 1)
@@ -100,7 +102,6 @@ namespace FinalLaboratorioII.servicios
             localidad1.NombreLocalidad = loc;
             Console.Clear();
             Console.WriteLine("Localidad agregada con éxito");
-            Console.ReadKey();
             return localidad1;
         }
         public void mostrarLocalidades(List<Localidad> _lista)
@@ -315,7 +316,6 @@ namespace FinalLaboratorioII.servicios
             while (subMenuActivo)
             {
                 Console.Clear();
-                Console.WriteLine("LOCALIDAD: " + _lista[_opcionElegida]);
                 for (int i = 0; i < opciones.Length; i++)
                 {
                     
@@ -387,10 +387,7 @@ namespace FinalLaboratorioII.servicios
                     atributos[cont] = _localidad[i];
                     cont++;
                 }
-                if (cont>3)
-                {
-                    cont = 0;
-                }
+               
             }
 
             l.Id_localidad = int.Parse(atributos[0]);
@@ -404,7 +401,7 @@ namespace FinalLaboratorioII.servicios
             List<string>lista = new List<string>();
             foreach (var item in _lista)
             {
-                lista.Add($"ID_LOCALIDAD:;{item.Id_localidad};ID_PROVINCIA:;{item.Id_provincia};LOCALIDAD:;{item.NombreLocalidad}");
+                lista.Add($"ID_LOCALIDAD:;{item.Id_localidad};ID_PROVINCIA:;{item.Id_provincia};LOCALIDAD:;{item.NombreLocalidad};");
             }
             return lista;
         }

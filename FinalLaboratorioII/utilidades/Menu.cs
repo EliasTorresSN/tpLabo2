@@ -102,6 +102,7 @@ namespace FinalLaboratorioII.utilidades
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("INDIQUE COLOR");
 
                 for (int i = 0; i < lista.Length; i++)
                 {

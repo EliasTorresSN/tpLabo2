@@ -48,6 +48,7 @@ namespace FinalLaboratorioII.servicios
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("INDIQUE SEGMENTO");
 
                 for (int i = 0; i < lista.Count; i++)
                 {

@@ -32,7 +32,7 @@ namespace FinalLaboratorioII.entidades
 
         public override string  ToString()
         {
-            return $"ID: {this.Id_marca} MARCA: {this.NombreMarca} ";
+            return $"{this.NombreMarca} ";
         }
 
 

@@ -17,7 +17,7 @@ namespace FinalLaboratorioII.servicios
         public void menuVehiculos()
         {
             List<string> listaVehiculos = cargarArchivoEnLista("listaVehiculos.txt");
-
+            Menu menu1 = new Menu();
             Console.CursorVisible = false;
             string[] opciones = { "AGREGAR VEHICULO", "MOSTRAR VEHICULOS" };
             int opcionElegida = 0;
@@ -55,6 +55,7 @@ namespace FinalLaboratorioII.servicios
                             vehiculos.Add(vehiculo1);
                             List<string> vehiculosString = listaVehiculoAString(vehiculos);
                             cargarListaEnArchivo(vehiculosString);
+                            menu1.menu();
                             return;
                         }
                         else if (opcionElegida == 1)
@@ -105,7 +106,6 @@ namespace FinalLaboratorioII.servicios
                 vehiculo1.Id_vehiculo = _vehiculos[_vehiculos.Count - 1].Id_vehiculo + 1;
             }
 
-            Console.WriteLine("ELIJA MARCA");
             int id_marca = sm.mostrarMenuInteractivo(marcas);
             Console.Clear();
             vehiculo1.Id_marca = id_marca + 1;
@@ -113,6 +113,8 @@ namespace FinalLaboratorioII.servicios
             Console.WriteLine("INGRESE MODELO");
             string mod = Console.ReadLine();
             vehiculo1.Modelo = mod;
+            Console.Clear();
+
             do
             {
                 Console.WriteLine("INGRESE AÑO");
@@ -125,7 +127,8 @@ namespace FinalLaboratorioII.servicios
 
                 }
             } while (!valido);
-           
+            Console.Clear();
+
             do
             {
                 Console.WriteLine("INGRESE KILÓMETROS");
@@ -145,46 +148,41 @@ namespace FinalLaboratorioII.servicios
             string patente = Console.ReadLine();
             vehiculo1.Patente = patente;
             Console.Clear();
-            Console.WriteLine("ELIJA SEGMENTO");
             int id_seg = ss.mostrarMenuInteractivo(segmentos);
             vehiculo1.Id_segmento = id_seg + 1;
             Console.Clear();
-            Console.WriteLine("ELIJA COMBUSTIBLE");
             int id_comb = sc.mostrarMenuInteractivo(combustibles);
             vehiculo1.Id_combustible = id_comb + 1;
             Console.Clear();
-            Console.WriteLine("ELIJA COLOR");
             int col = menu.mostrarMenuInteractivo(colores);
             vehiculo1.Color = colores[col];
             Console.Clear();
 
-            if (id_seg == 1 || id_seg == 2 || id_seg == 3 || id_seg == 5 || id_seg == 6 || id_seg == 7)
+            if (id_seg == 0 || id_seg == 1 || id_seg == 2 )
             {
-                if (id_seg == 5 || id_seg == 6 || id_seg == 7)
-                {
-                    do
-                    {
-                        Console.WriteLine("INGRESE CILINDRADA");
-                        cil = Console.ReadLine();
-                        valido = validarNumeros(cil);
-                        if (valido)
-                        {
-                            vehiculo1.Cilindrada = cil;
-                            
-                        }
-                    } while (!valido);
-                }
-                else
-                {
-                    vehiculo1.Cilindrada = "n/d";
-                }
+                
+                vehiculo1.Cilindrada = "n/d";
                 vehiculo1.Caja_carga = false;
                 vehiculo1.Dimension_caja = "n/d";
                 vehiculo1.Patente = "n/d";
                 Console.Clear();
 
             }
-            else if (id_seg == 4 || id_seg == 8)
+            else if(id_seg == 4 || id_seg == 5 || id_seg ==6)
+            {
+                do
+                {
+                    Console.WriteLine("INGRESE CILINDRADA");
+                    cil = Console.ReadLine();
+                    valido = validarNumeros(cil);
+                    if (valido)
+                    {
+                        vehiculo1.Cilindrada = cil;
+
+                    }
+                } while (!valido);
+            }
+            else if (id_seg == 3 || id_seg == 7)
             {
                 vehiculo1.Cilindrada = "n/d";
                 vehiculo1.Caja_carga = true;
@@ -243,7 +241,7 @@ namespace FinalLaboratorioII.servicios
         }
         public void mostrarVehiculos(List<Vehiculo> _lista)
         {
-            Menu menu = new Menu();
+            
             bool activo = true;
             Console.CursorVisible = false;
             int opcionElegida = 0;
@@ -317,7 +315,7 @@ namespace FinalLaboratorioII.servicios
                 Console.Clear();
                 Console.WriteLine("ATRIBUTO A MODIFICAR");
 
-                if (_vehiculo.Id_segmento == 1 || _vehiculo.Id_segmento == 2 || _vehiculo.Id_segmento == 3 || _vehiculo.Id_segmento == 5 || _vehiculo.Id_segmento == 6 || _vehiculo.Id_segmento == 7)
+                if (_vehiculo.Id_segmento == 1 || _vehiculo.Id_segmento == 2 || _vehiculo.Id_segmento == 3 )
                 {
 
                     for (int i = 0; i < 8; i++)
@@ -333,37 +331,25 @@ namespace FinalLaboratorioII.servicios
                     }
 
 
-                    if (_vehiculo.Id_segmento == 5 || _vehiculo.Id_segmento == 6 || _vehiculo.Id_segmento == 7)
+                   
+                   
+
+                    
+
+                }
+                else if (_vehiculo.Id_segmento == 5 || _vehiculo.Id_segmento == 6 || _vehiculo.Id_segmento == 7)
+                {
+                    for (int i = 0; i < 9; i++)
                     {
-                        for (int i = 0; i < 9; i++)
+
+                        if (i == opcionElegida)
                         {
-
-                            if (i == opcionElegida)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.BackgroundColor = ConsoleColor.White;
-                            }
-                            Console.WriteLine(atributos[i]);
-                            Console.ResetColor();
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.White;
                         }
-
+                        Console.WriteLine(atributos[i]);
+                        Console.ResetColor();
                     }
-                    else
-                    {
-                        for (int i = 0; i < 8; i++)
-                        {
-
-                            if (i == opcionElegida)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.BackgroundColor = ConsoleColor.White;
-                            }
-                            Console.WriteLine(atributos[i]);
-                            Console.ResetColor();
-                        }
-                    }
-
-                    Console.Clear();
 
                 }
                 else if (_vehiculo.Id_segmento == 4 || _vehiculo.Id_segmento == 8)
@@ -527,7 +513,7 @@ namespace FinalLaboratorioII.servicios
 
                         }
 
-
+                        Console.WriteLine("Datos guardados exitosamente");
                         Console.ReadKey();
                         return _vehiculo;
                 }
@@ -587,13 +573,13 @@ namespace FinalLaboratorioII.servicios
             v.Patente = atributos[5];
             v.Id_segmento = int.Parse(atributos[6]);
             v.Id_combustible = int.Parse(atributos[7]);
-            v.Cilindrada = atributos[8];
-            v.Caja_carga = bool.Parse(atributos[9]);
-            v.Dimension_caja = atributos[10];
-            v.Observaciones = atributos[11];
-            v.Precio_vta = float.Parse(atributos[12]);
-
-
+            v.Color = atributos[8];
+            v.Cilindrada = atributos[9];
+            v.Caja_carga = bool.Parse(atributos[10]);
+            v.Dimension_caja = atributos[11];
+            v.Carga_max = atributos[12];
+            v.Observaciones = atributos[13];
+            v.Precio_vta = float.Parse(atributos[14]);
 
             return v;
         }
@@ -689,6 +675,7 @@ namespace FinalLaboratorioII.servicios
         }
         public void subMenu(List<Vehiculo> _lista, int _opcionElegida)
         {
+            Menu menu = new Menu();
             bool subMenuActivo = true;
             int opcionSubMenu = 0;
             string[] opciones = { "MODIFICAR ÍTEM", "ELIMINAR ÍTEM" };
@@ -729,10 +716,12 @@ namespace FinalLaboratorioII.servicios
                                 Vehiculo aux = actualizarVehiculo(v, _lista);
                                 _lista[_opcionElegida] = aux;
                                 cargarListaEnArchivo(listaVehiculoAString(_lista));
+                                menu.menu();
                                 break;
                             case 1:
                                 _lista = eliminarVehiculo(v, _lista);
                                 cargarListaEnArchivo(listaVehiculoAString(_lista));
+                                menu.menu();
                                 break;
                         }
                         subMenuActivo = false;
@@ -788,7 +777,7 @@ namespace FinalLaboratorioII.servicios
         }
         public void cargarListaEnArchivo(List<string> _lista)
         {
-            FileStream archivo = new FileStream("listaLocalidades.txt", FileMode.Create);
+            FileStream archivo = new FileStream("listaVehiculos.txt", FileMode.Create);
 
             using (StreamWriter writer = new StreamWriter(archivo))
             {

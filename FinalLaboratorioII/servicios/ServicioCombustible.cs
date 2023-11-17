@@ -30,12 +30,14 @@ namespace FinalLaboratorioII.servicios
         public int mostrarMenuInteractivo(List<Combustible> lista)
         {
             Console.Clear();
+
             Console.CursorVisible = false;
             int opcionElegida = 0;
 
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("INDIQUE COMBUSTIBLE");
 
                 for (int i = 0; i < lista.Count; i++)
                 {

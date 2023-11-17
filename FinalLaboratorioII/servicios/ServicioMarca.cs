@@ -11,7 +11,7 @@ namespace FinalLaboratorioII.servicios
 
         public ServicioMarca(){}
         public void menuMarcas()
-        {
+        {   Menu menu1 = new Menu();
             List<string> listaMarcas = cargarArchivoEnLista("listaMarcas.txt");
 
             Console.CursorVisible = false;
@@ -51,6 +51,7 @@ namespace FinalLaboratorioII.servicios
                             marcas.Add(marca1);
                             List<string> marcasString = listaMarcaAString(marcas);
                             cargarListaEnArchivo(marcasString);
+                            menu1.menu();
                             return;
                         }
                         else if (opcionElegida == 1)
@@ -271,13 +272,14 @@ namespace FinalLaboratorioII.servicios
         public int mostrarMenuInteractivo(List<Marca> lista)
         {
             Console.Clear();
+            
             Console.CursorVisible = false;
             int opcionElegida = 0;
 
             while (true)
             {
                 Console.Clear();
-
+                Console.WriteLine("INDIQUE MARCA");
                 for (int i = 0; i < lista.Count; i++)
                 {
 

@@ -28,5 +28,10 @@ namespace FinalLaboratorioII.entidades
 
         }
 
+        public override string ToString()
+        {
+            return $"{this.TipoCombustible}";
+        }
+
     }
 }

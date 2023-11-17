@@ -20,6 +20,9 @@ namespace FinalLaboratorioII.entidades
         {
             get { return tipoSegmento; } set { tipoSegmento = value; }
         }
-
+        public override string ToString()
+        {
+            return $"{this.tipoSegmento}";
+        }
     }
 }
