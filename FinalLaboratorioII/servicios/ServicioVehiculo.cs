@@ -232,39 +232,33 @@ namespace FinalLaboratorioII.servicios
 
             return vehiculo1;
         }
-        public void mostrarVehiculos(List<string> _lista)
+        public void mostrarVehiculos(List<Vehiculo> _lista)
         {
-
-            List<string> lista = _lista;
-            int cont = 0;
+            Menu menu = new Menu();
+            bool activo = true;
             Console.CursorVisible = false;
             int opcionElegida = 0;
 
-            while (true)
+            while (activo)
             {
                 Console.Clear();
-                if (lista.Count == 0 || lista.Count == 1)
+                if (_lista.Count == 0)
                 {
                     Console.WriteLine("No hay ítems cargados");
                     break;
                 }
                 else
                 {
-                    for (int i = 0; i < lista.Count; i++)
+                    for (int i = 0; i < _lista.Count; i++)
                     {
-                        if (i != lista.Count - 1)
+                        if (i == opcionElegida)
                         {
-                            if (i == opcionElegida)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Black;
-                                Console.BackgroundColor = ConsoleColor.White;
-                            }
-                            Console.WriteLine(lista[i]);
-                            Console.ResetColor();
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.White;
                         }
-
+                        Console.WriteLine(_lista[i].ToString());
+                        Console.ResetColor();
                     }
-
                 }
 
 
@@ -276,63 +270,20 @@ namespace FinalLaboratorioII.servicios
                         opcionElegida = Math.Max(0, opcionElegida - 1);
                         break;
                     case ConsoleKey.DownArrow:
-                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
+                        opcionElegida = Math.Min(_lista.Count - 1, opcionElegida + 1);
                         break;
                     case ConsoleKey.Enter:
-                        bool subMenuActivo = true;
-                        int opcionSubMenu = 0;
-                        string[] opciones = { "Modificar datos", "Eliminar vehiculo" };
-                        while (subMenuActivo)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("Has seleccionado el vehículo: " + lista[opcionElegida]);
-                            Console.WriteLine("Selecciona una opción:");
-                            for (int i = 0; i < opciones.Length; i++)
-                            {
-                                if (i == opcionSubMenu)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Black;
-                                    Console.BackgroundColor = ConsoleColor.White;
-                                }
-                                Console.WriteLine(opciones[i]);
-                                Console.ResetColor();
-                            }
-
-
-                            var subMenuKey = Console.ReadKey().Key;
-
-                            switch (subMenuKey)
-                            {
-                                case ConsoleKey.UpArrow:
-                                    opcionSubMenu = Math.Max(0, opcionSubMenu - 1);
-                                    break;
-                                case ConsoleKey.DownArrow:
-                                    opcionSubMenu = Math.Min(1, opcionSubMenu + 1);
-                                    break;
-                                case ConsoleKey.Enter:
-                                    Console.Clear();
-                                    switch (opcionSubMenu)
-                                    {
-                                        case 0:
-                                            actualizarVehiculo(opcionElegida);
-                                            Console.ReadKey();
-                                            break;
-                                        case 1:
-                                            eliminarVehiculo(opcionElegida);
-                                            break;
-                                    }
-                                    subMenuActivo = false;
-                                    break;
-                                case ConsoleKey.Escape:
-                                    subMenuActivo = false;
-                                    break;
-                            }
-                        }
+                        subMenu(_lista,opcionElegida);
                         break;
+                    case ConsoleKey.Escape:
+                        menuVehiculos();
+                        break;
+
                 }
             }
-
+            Console.ReadKey();
         }
+
         public void actualizarVehiculo(int opcion)
         {
             Console.Clear();
@@ -548,6 +499,63 @@ namespace FinalLaboratorioII.servicios
                 }
             }
         }
+        public void subMenu(List<Vehiculo> _lista, int _opcionElegida)
+        {
+            bool subMenuActivo = true;
+            int opcionSubMenu = 0;
+            string[] opciones = { "MODIFICAR ÍTEM", "ELIMINAR ÍTEM" };
+
+            while (subMenuActivo)
+            {
+                Console.Clear();
+                for (int i = 0; i < opciones.Length; i++)
+                {
+
+                    if (i == opcionSubMenu)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(opciones[i]);
+                    Console.ResetColor();
+                }
+
+
+                var subMenuKey = Console.ReadKey().Key;
+
+                switch (subMenuKey)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionSubMenu = Math.Max(0, opcionSubMenu - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionSubMenu = Math.Min(1, opcionSubMenu + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        Vehiculo v = _lista[_opcionElegida];
+                        Console.Clear();
+                        switch (opcionSubMenu)
+                        {
+                            case 0:
+
+                                Vehiculo aux = actualizarVehiculo(v, _lista);
+                                _lista[_opcionElegida] = aux;
+                                cargarListaEnArchivo(listaVehiculoAString(_lista));
+                                break;
+                            case 1:
+                                _lista = eliminarVehiculo(l, _lista);
+                                cargarListaEnArchivo(listaVehiculoAString(_lista));
+                                break;
+                        }
+                        subMenuActivo = false;
+                        break;
+                    case ConsoleKey.Escape:
+                        subMenuActivo = false;
+                        break;
+                }
+            }
+        }
+
         static bool validarPrecio(string _dato)
         {
             double precio;
