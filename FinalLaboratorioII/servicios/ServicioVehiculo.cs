@@ -12,6 +12,70 @@ namespace FinalLaboratorioII.servicios
         {
         }
 
+        public void menuVehiculos()
+        {
+            List<string> listaLocalidades = cargarArchivoEnLista("listaVehiculos.txt");
+
+            Console.CursorVisible = false;
+            string[] opciones = { "AGREGAR VEHICULO", "MOSTRAR VEHICULOS" };
+            int opcionElegida = 0;
+
+            while (true)
+            {
+                List<Vehiculo> vehiculos = convertirListaAVehiculo(listaVehiculos);
+                Console.Clear();
+                for (int i = 0; i < opciones.Length; i++)
+                {
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(opciones[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(opciones.Length - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        if (opcionElegida == 0)
+                        {
+
+                            Vehiculo vehiculo1 = crearVehiculo(vehiculos);
+                            vehiculos.Add(vehiculo1);
+                            List<string> vehiculosString = listaVehiculoAString(vehiculos);
+                            cargarListaEnArchivo(vehiculosString);
+                            return;
+                        }
+                        else if (opcionElegida == 1)
+                        {
+                            mostrarVehiculos(vehiculos);
+
+                        }
+                        else if (opcionElegida == opciones.Length - 1)
+                        {
+                            Console.Clear();
+                            return;
+                        }
+                        break;
+                    case ConsoleKey.Escape:
+                        Menu menu = new Menu();
+                        menu.menu();
+                        break;
+
+                }
+            }
+
+
+        }
 
 
         //---------------------------------------------------------------------------------
