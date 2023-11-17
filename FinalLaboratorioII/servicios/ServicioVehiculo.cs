@@ -3,6 +3,8 @@ using FinalLaboratorioII.entidades.subEntidades;
 using FinalLaboratorioII.utilidades;
 using System;
 using System.Collections.Specialized;
+using System.Drawing;
+using System.Reflection;
 
 namespace FinalLaboratorioII.servicios
 {
@@ -14,7 +16,7 @@ namespace FinalLaboratorioII.servicios
 
         public void menuVehiculos()
         {
-            List<string> listaLocalidades = cargarArchivoEnLista("listaVehiculos.txt");
+            List<string> listaVehiculos = cargarArchivoEnLista("listaVehiculos.txt");
 
             Console.CursorVisible = false;
             string[] opciones = { "AGREGAR VEHICULO", "MOSTRAR VEHICULOS" };
@@ -402,16 +404,27 @@ namespace FinalLaboratorioII.servicios
         }
 
         //---------------------------------------------------------------------------------
-        List<Vehiculo> convertirListaAVehiculos(List<string> lista)
+        public List<Vehiculo> convertirListaAVehiculo(List<string> lista)
         {
             List<Vehiculo>vehiculos = new List<Vehiculo>();
             
-            for (int i = 0; i < (lista.Count*2); i++)
+            for (int i = 0; i < (lista.Count); i++)
             {
                 string[] vehiculoString = lista[i].Split(';');
                 vehiculos.Add(elementoStringAVehiculo(vehiculoString));
             }
             return vehiculos;
+        }
+        public List<string> listaVehiculoAString(List<Vehiculo> _lista)
+        {
+            List<string> lista = new List<string>();
+            foreach (var item in _lista)
+            {
+                lista.Add($"ID:;{item.Id_vehiculo};ID_Marca:;{item.Id_marca};Modelo:;{item.Modelo};Año:;{item.Anio};Kilometros:;{item.Kilometros};Patente:;{item.Patente};ID_Segmento:;{item.Id_segmento}" +
+                $";ID_Combustible:;{item.Id_combustible};Color:;{item.Color};Cilindrada:;{item.Cilindrada};Caja_carga=;{item.Caja_carga};Dimension_Caja=;{item.Dimension_caja};Carga_Max =;{item.Carga_max}" +
+                $";Observaciones:;{item.Observaciones};Precio_Venta:;{item.Precio_vta}");
+            }
+            return lista;
         }
         public Vehiculo elementoStringAVehiculo(string[]vehiculo)
         {
