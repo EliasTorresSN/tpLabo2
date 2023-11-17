@@ -1,4 +1,5 @@
 ﻿using FinalLaboratorioII.entidades;
+using FinalLaboratorioII.utilidades;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,11 +56,12 @@ namespace FinalLaboratorioII.servicios
         }
         public void mostrarLocalidades(List<Localidad> _lista)
         {
-            int cont = 0;
+            Menu menu = new Menu();
+            bool activo = true;
             Console.CursorVisible = false;
             int opcionElegida = 0;
 
-            while (true)
+            while (activo)
             {
                 Console.Clear();
                 if (_lista.Count == 0)
@@ -94,19 +96,22 @@ namespace FinalLaboratorioII.servicios
                         break;
                     case ConsoleKey.Enter:
                         subMenu(_lista,opcionElegida);
-                        
-                         break;
+                        break;
+                    case ConsoleKey.Escape:
+                        menuLocalidades();
+                        break;
 
 
                 }
             }
             Console.ReadKey();
         }
-        public void actualizarLocalidad(Localidad _localidad)
+        public Localidad actualizarLocalidad(Localidad _localidad, List<Localidad>_lista)
         {
                         
 
             string[] atributos= {"ID_PROVINCIA","NOMBRE","SALIR"};
+            int c = 0;
 
             Console.CursorVisible = false;
             int opcionElegida = 0;
@@ -138,28 +143,31 @@ namespace FinalLaboratorioII.servicios
                         break;
                     case ConsoleKey.Enter:
 
-
                         if (opcionElegida==0)
                         {
+                            Console.WriteLine("INGRESE NUEVA PROVINCIA");
+
                             ServicioProvincia sp = new ServicioProvincia();
                             List<Provincia> lista = sp.crearListaProvincias();
-                            _localidad.Id_provincia = mostrarMenuInteractivo(lista);
+                            int id = mostrarMenuInteractivo(lista);
+                            _localidad.Id_provincia = id;
+                            c = 1;
                         }
                         else if (opcionElegida==1)
                         {
-                            Console.WriteLine("Ingrese nombre de localidad");
+                            Console.WriteLine("INGRESE NUEVO NOMBRE");
                             string loc = Console.ReadLine();
                             _localidad.NombreLocalidad = loc;
+                            c = 1;
                         }
                         else
                         {
-                            Console.WriteLine("NO SE MODIFICÓ NINGÚN DATO");
-                            break;
+                            Console.Clear();
+                            if (c!=0){Console.WriteLine("DATOS MODIFICADOS CON ÉXITO");}                            
+                            else { Console.WriteLine("NO SE MODIFICÓ NINGÚN DATO");}
                         }
-                        Console.WriteLine("DATOS MODIFICADOS CON ÉXITO");
-                        Console.Clear();
                         Console.ReadKey();
-                    break;
+                        return _localidad;
                 }
             }
         }
@@ -167,6 +175,7 @@ namespace FinalLaboratorioII.servicios
         {
             _localidades.Remove(_localidad);
             Console.WriteLine("ÍTEM ELIMINADO");
+            Console.ReadKey();
         }
         public int mostrarMenuInteractivo(List<Localidad> lista)
         {            
@@ -246,11 +255,11 @@ namespace FinalLaboratorioII.servicios
         }
         public void menuLocalidades()
         {
-            List<string>listaLocalidades = cargarArchivoEnLista("listaLocalidades.txt");
-            List<Localidad>localidades = convertirListaALocalidad(listaLocalidades);
-
+            List<string> listaLocalidades = cargarArchivoEnLista("listaLocalidades.txt");
+            List<Localidad> localidades = convertirListaALocalidad(listaLocalidades);
+             
             Console.CursorVisible = false;
-            string[] opciones = { "AGREGAR LOCALIDAD", "MOSTRAR LOCALIDADES", "ELIMINAR LOCALIDAD", "SALIR" };
+            string[] opciones = { "AGREGAR LOCALIDAD", "MOSTRAR LOCALIDADES", "SALIR" };
             int opcionElegida = 0;
 
             while (true)
@@ -281,41 +290,25 @@ namespace FinalLaboratorioII.servicios
                         if (opcionElegida == 0)
                         {
                             Localidad localidad1 = crearLocalidad(localidades);
-                            localidades.Add(localidad1) /*agregarLocalidadALista(localidades, localidad1)*/;
-                            Console.ReadKey();
+                            localidades.Add(localidad1);
                         }
                         else if (opcionElegida == 1)
                         {
                             mostrarLocalidades(localidades);
-                        }
-                        else if (opcionElegida == 2)
-                        {
-                            //eliminarVehiculo();
-                            Console.ReadKey();
-                        }
+                        }                        
                         else if (opcionElegida == opciones.Length - 1)
                         {
                             Console.Clear();
-                            Console.WriteLine("Saliendo del programa.");
                             return;
                         }
-
-                        Console.Clear();
-                        Console.WriteLine($"Seleccionaste: {opciones[opcionElegida]}");
-                        Console.ReadKey();
                         break;
+                    case ConsoleKey.Escape:
+                        Menu menu = new Menu();
+                        menu.menu();
+                        break;
+                   
                 }
             }
-
-
-
-
-
-
-
-
-
-
 
 
         }
@@ -332,7 +325,7 @@ namespace FinalLaboratorioII.servicios
                 Console.WriteLine("SELECCIONE:");
                 for (int i = 0; i < opciones.Length; i++)
                 {
-                    Console.Clear();
+                    
                     if (i == opcionSubMenu)
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -355,13 +348,13 @@ namespace FinalLaboratorioII.servicios
                         break;
                     case ConsoleKey.Enter:
                         Localidad l = _lista[_opcionElegida];
-
-
                         Console.Clear();
                         switch (opcionSubMenu)
                         {
                             case 0:
-                                actualizarLocalidad(l);
+                               
+                                Localidad aux = actualizarLocalidad(l,_lista);
+                                _lista[_opcionElegida] = aux;
                                 Console.ReadKey();
                                 break;
                             case 1:
@@ -401,7 +394,6 @@ namespace FinalLaboratorioII.servicios
             }
             return localidades;
         }
-
         public Localidad elementoStringALocalidad(string[] _localidad)
         {
             Localidad l = new Localidad();
