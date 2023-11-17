@@ -27,13 +27,35 @@ namespace FinalLaboratorioII.servicios
                 vehiculo1.Id_vehiculo = _vehiculos[_vehiculos.Count - 1].Id_vehiculo + 1;
             }
 
-
-
-            Console.WriteLine("Elija Marca");
+            Console.WriteLine("ELIJA MARCA");
             int id_marca = sm.mostrarMenuInteractivo(marcas);
             Console.Clear();
             vehiculo1.Id_marca = id_marca;
             Console.Clear();
+            Console.WriteLine("INGRESE MODELO");
+            string mod = Console.ReadLine();
+            vehiculo1.Modelo = mod;
+            Console.WriteLine("INGRESE AÑO");
+            string anio = Console.ReadLine();
+            vehiculo1.Anio = anio;
+            Console.WriteLine("INGRESE KILÓMETROS");
+            string km = Console.ReadLine();
+            vehiculo1.Kilometros = km;
+            Console.WriteLine("INGRESE PATENTE");
+            string patente = Console.ReadLine();
+            vehiculo1.Patente = patente;
+
+
+
+            //ID SEG
+            //id_comb
+            //color
+            //cilindrada
+            //caja carga
+            //dimensio
+            //cargamax
+            //observacion
+            //preciovta
 
 
 

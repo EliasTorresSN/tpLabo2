@@ -82,7 +82,7 @@ namespace FinalLaboratorioII.servicios
             List<Provincia> lista = sp.crearListaProvincias();
             Localidad localidad1 = new Localidad();
 
-            Console.WriteLine("Elija provincia");
+            Console.WriteLine("ELIJA PROVINCIA");
             int id_provincia = mostrarMenuInteractivo(lista);
             Console.Clear();
             localidad1.Id_provincia = id_provincia;
