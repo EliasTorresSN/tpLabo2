@@ -55,7 +55,7 @@ namespace FinalLaboratorioII.entidades
         public string Fecha_entrega
         {
             get { return this.fecha_entrega; }
-            set { this.Fecha_entrega = value; }
+            set { this.fecha_entrega = value; }
         }
 
         public double Subtotal
@@ -82,7 +82,7 @@ namespace FinalLaboratorioII.entidades
 
         public override string ToString()
         {
-            return $"ID VENTA: {this.Id_venta} ID CLIENTE: {this.Id_Cliente}  ID_VEHICULO: {this.Id_Vehiculo} FECHACOMPRA: {this.Fecha_compra} FECHAENTREGA: {this.Fecha_entrega} SUBTOTAL:{this.Subtotal} IVA DESCUENTO:{this.Descuento} TOTAL: {this.Total}";
+            return $"ID VENTA: {this.Id_venta} ID CLIENTE: {this.Id_Cliente}  ID_VEHICULO: {this.Id_Vehiculo} FECHACOMPRA: {this.Fecha_compra} FECHAENTREGA: {this.Fecha_entrega} SUBTOTAL:{this.Subtotal} IVA:{this.iva} DESCUENTO:{this.Descuento} TOTAL: {this.Total}";
         }
     }
 }

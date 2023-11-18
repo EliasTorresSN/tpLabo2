@@ -62,7 +62,7 @@ namespace FinalLaboratorioII.utilidades
                         }
                         else if (opcionElegida == 2)
                         {
-                            
+                            svt.menuVentas();
                         }
                         else if (opcionElegida == 3)
                         {
