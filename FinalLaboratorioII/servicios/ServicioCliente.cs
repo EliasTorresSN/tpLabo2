@@ -1,5 +1,8 @@
 ﻿using FinalLaboratorioII.entidades;
+using FinalLaboratorioII.utilidades;
 using System.IO;
+using System.Net.Http.Headers;
+
 namespace FinalLaboratorioII.servicios
 {
     internal class ServicioCliente
@@ -7,91 +10,151 @@ namespace FinalLaboratorioII.servicios
         public ServicioCliente()
         {
         }
-
-        public Cliente crearCliente()
+        public void menuClientes()
         {
-            bool valDni = false, valSex = false;
-            string doc,sexo;
+            Menu menu1 = new Menu();
+            List<string> listaClientes = cargarArchivoEnLista("listaClientes.txt");
+            List<string> listaLocalidades = cargarArchivoEnLista("listaLocalidades.txt");
+
+            Console.CursorVisible = false;
+            string[] opciones = { "AGREGAR CLIENTE", "MOSTRAR CLIENTES" };
+            int opcionElegida = 0;
+
+            while (true)
+            {
+                List<Cliente> clientes = convertirListaACliente(listaClientes);
+                Console.Clear();
+                for (int i = 0; i < opciones.Length; i++)
+                {
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(opciones[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(opciones.Length - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        if (opcionElegida == 0)
+                        {
+                            Console.Clear();
+                            Cliente cliente1 = crearCliente(clientes);
+                            clientes.Add(cliente1);
+                            List<string> clientesString= listaClienteAString(clientes);
+                            cargarListaEnArchivo(clientesString);
+                            menu1.menu();
+                            return;
+                        }
+                        else if (opcionElegida == 1)
+                        {
+                            mostrarClientes(clientes);
+
+                        }
+                        else if (opcionElegida == opciones.Length - 1)
+                        {
+                            Console.Clear();
+                            return;
+                        }
+                        break;
+                    case ConsoleKey.Escape:
+                        Menu menu = new Menu();
+                        menu.menu();
+                        break;
+
+                }
+            }
+
+
+        }
+
+        public Cliente crearCliente(List<Cliente> _clientes)
+        {
+            bool valido;
+            List<string>listaLocalidades = cargarArchivoEnLista("listaLocalidades.txt");
             Cliente cliente = new Cliente();
-            Console.WriteLine("Ingrese cliente: ");
+
+            if (_clientes.Count == 0)
+            {
+                cliente.Id_cliente= 1;
+
+            }
+            else
+            {
+                cliente.Id_cliente = _clientes[_clientes.Count - 1].Id_localidad + 1;
+            }
+
+
+
+            Console.WriteLine("Ingrese Nombre Cliente: ");
             cliente.NombreCliente = Console.ReadLine();
-
-            Console.WriteLine("Ingrese C.U.I.T.: ");
-
-            string codCompleto = "";
-            int[] coef = { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
-            int suma = 0;
             do
             {
-                Console.WriteLine("Ingrese los ocho digitos del dni");
-                doc  = Console.ReadLine();
-                if (doc.Length != 8)
+                Console.WriteLine("Ingrese C.U.I.T.: ");
+                string cuit = Console.ReadLine();
+                valido = validarNumeros(cuit);
+                if (valido)
                 {
-                    Console.WriteLine("Ingrese dni válido");
-                    
+                    cliente.Cuit = cuit;
+
                 }
-                else { valDni = true; }
+            } while (!valido);
 
-            } while (!valDni);
-
-            do
-            {
-                Console.WriteLine("Ingrese sexo (m o f)");
-               sexo= Console.ReadLine();
-                if (sexo!="m"&&sexo!="f")
-                {
-                    Console.WriteLine("Ingrese 'm' o 'f'");
-                    Console.ReadKey();
-                    Console.Clear();
-                }
-                else {valSex = true; }
-               
-            } while (!valSex);
-
-            if (sexo.Equals("m"))
-            {
-                codCompleto = "20" + doc;
-            }
-            else if (sexo.Equals("f"))
-            {
-                codCompleto = "27" + doc;
-            }
-            for (int i = 0; i < coef.Length; i++)
-            {
-                suma += int.Parse(codCompleto[i].ToString()) * coef[i];
-            }
-
-            decimal cod = suma / 11;
-            int resto = suma - (Convert.ToInt32(Math.Round(cod) * 11));
-            int z = 11 - resto;
-            string cuil_cuit = codCompleto + z;
-            cliente.Cuit = cuil_cuit;
-
-
+                     
             Console.WriteLine("Ingrese domicilio del cliente: ");
             cliente.Domicilio = Console.ReadLine();
 
             Console.WriteLine("Ingrese localidad del cliente: ");
-            //menu interactivo
-            cliente.Id_localidad = 1;
+            Console.Clear();
+            int loc = mostrarMenuInteractivo(listaLocalidades);
+            cliente.Id_localidad = loc;
 
-            Console.WriteLine("Ingrese telefono:");
-            cliente.Telefono = Console.ReadLine();
+
+            do
+            {
+                Console.WriteLine("Ingrese telefono:");
+               
+                string tel = Console.ReadLine();
+                valido = validarNumeros(tel);
+                if (valido)
+                {
+                    cliente.Telefono = tel;
+                }
+            } while (!valido);
+            
 
             Console.WriteLine("Ingrese correo electrónico:");
             cliente.Correo = Console.ReadLine();
 
-            return new Cliente();
+            return cliente;
+
+
         }
 
-        public void eliminarCliente(Cliente _cliente, List<Cliente>listaClientes)
+
+
+        public List<Cliente> eliminarCliente(Cliente _cliente, List<Cliente> _clientes)
         {
-            listaClientes.Remove(_cliente);
+            _clientes.Remove(_cliente);
+            Console.WriteLine("ÍTEM ELIMINADO");
+            Console.ReadKey();
+            return _clientes;
         }
+
 
         public void actualizarCLiente(Cliente c)
         {
-            string[] lista = { "Nombre", "Cuit", "Domicilio", "Localidad", "Teléfono", "Correo","Salir" };
+            List<string> lista = new List<string>(){ "Nombre", "Cuit", "Domicilio", "Localidad", "Teléfono", "Correo","Salir" };
             Console.WriteLine("Elija que modificar");
             int atributo = mostrarMenuInteractivo(lista);
             switch(atributo)
@@ -141,20 +204,65 @@ namespace FinalLaboratorioII.servicios
         }
 
 
-        public void mostrarClientes(List<Cliente>_listaClientes)
+        public void mostrarClientes(List<Cliente> _lista)
         {
-            foreach (var item in _listaClientes)
+            Menu menu = new Menu();
+            bool activo = true;
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
+
+            while (activo)
             {
-                Console.WriteLine(item.ToString());
+                Console.Clear();
+                if (_lista.Count == 0)
+                {
+                    Console.WriteLine("No hay ítems cargados");
+                    break;
+                }
+                else
+                {
+                    for (int i = 0; i < _lista.Count; i++)
+                    {
+                        if (i == opcionElegida)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.White;
+                        }
+                        Console.WriteLine(_lista[i].ToString());
+                        Console.ResetColor();
+                    }
+                }
+
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(_lista.Count - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        subMenu(_lista, opcionElegida);
+                        break;
+                    case ConsoleKey.Escape:
+                        menuClientes();
+                        break;
+
+
+                }
             }
+            Console.ReadKey();
         }
 
 
 
-        public int mostrarMenuInteractivo(string[] _lista)
+        public int mostrarMenuInteractivo(List<string> _lista)
         {
             Console.Clear();
-            string[] lista = _lista;
+            List<string> lista = _lista;
             Console.CursorVisible = false;
             int opcionElegida = 0;
             var res = 0;
@@ -163,7 +271,7 @@ namespace FinalLaboratorioII.servicios
             {
                 Console.Clear();
 
-                for (int i = 0; i < lista.Length; i++)
+                for (int i = 0; i < lista.Count; i++)
                 {
 
                     if (i == opcionElegida)
@@ -183,7 +291,7 @@ namespace FinalLaboratorioII.servicios
                         opcionElegida = Math.Max(0, opcionElegida - 1);
                         break;
                     case ConsoleKey.DownArrow:
-                        opcionElegida = Math.Min(lista.Length - 1, opcionElegida + 1);
+                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
                         break;
                     case ConsoleKey.Enter:
                         res = opcionElegida;
@@ -193,6 +301,151 @@ namespace FinalLaboratorioII.servicios
 
             
         }
+        //---------------------------------------------------------------------------------
+        public List<Cliente> convertirListaACliente(List<string> lista)
+        {
+            List<Cliente> clientes= new List<Cliente>();
+            string[] clienteString;
+            for (int i = 0; i < lista.Count; i++)
+            {
+                clienteString = lista[i].Split(';');
+                clientes.Add(elementoStringACliente(clienteString));
+            }
+            return clientes;
+        }
+        public Cliente elementoStringACliente(string[] _cliente)
+        {
+            Cliente c = new Cliente();
+            string[] atributos = new string[8];
+            int cont = 0;
+            for (int i = 0; i < _cliente.Length; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    atributos[cont] = _cliente[i];
+                    cont++;
+                }
+                if (cont > 7)
+                {
+                    cont = 0;
+                }
+            }
 
+            c.Id_cliente = int.Parse(atributos[0]);
+            c.NombreCliente = atributos[1];
+            c.Cuit = atributos[2];
+            c.Domicilio = atributos[3];
+            c.Id_localidad = int.Parse(atributos[4]);
+            c.Telefono = atributos[5];
+            c.Correo = atributos[6];
+
+            return c;
+        }
+        public List<string> listaClienteAString(List<Cliente> _lista)
+        {
+            List<string> lista = new List<string>();
+            foreach (var item in _lista)
+            {
+                lista.Add($"ID_CLIENTE:;{item.Id_cliente};NOMBRE:;{item.NombreCliente};C.U.I.T:;{item.Cuit}" +
+                $";DOMICILIO:;{item.Domicilio};ID_LOCALIDAD:;{item.Id_localidad};TELÉFONO:;{item.Telefono};CORREO:;{item.Correo};");
+            }
+            return lista;
+        }
+        static bool validarNumeros(string _dato)
+        {
+            for (int i = 0; i < _dato.Length; i++)
+            {
+                if ((int)_dato[i] < 48 || (int)_dato[i] > 57)
+                {
+                    Console.WriteLine("Ingrese numeros validos ->");
+
+                    return false;
+                }
+            }
+            return true;
+        }
+        public void subMenu(List<Cliente> _lista, int _opcionElegida)
+        {
+            bool subMenuActivo = true;
+            int opcionSubMenu = 0;
+            string[] opciones = { "MODIFICAR ÍTEM", "ELIMINAR ÍTEM" };
+
+            while (subMenuActivo)
+            {
+                Console.Clear();
+                for (int i = 0; i < opciones.Length; i++)
+                {
+
+                    if (i == opcionSubMenu)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(opciones[i]);
+                    Console.ResetColor();
+                }
+
+
+                var subMenuKey = Console.ReadKey().Key;
+
+                switch (subMenuKey)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionSubMenu = Math.Max(0, opcionSubMenu - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionSubMenu = Math.Min(1, opcionSubMenu + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        Cliente c = _lista[_opcionElegida];
+                        Console.Clear();
+                        switch (opcionSubMenu)
+                        {
+                            case 0:
+
+                                Cliente aux = actualizarCliente(c, _lista);
+                                _lista[_opcionElegida] = aux;
+                                cargarListaEnArchivo(listaClienteAString(_lista));
+                                break;
+                            case 1:
+                                _lista = eliminarCliente(c, _lista);
+                                cargarListaEnArchivo(listaClienteAString(_lista));
+                                break;
+                        }
+                        subMenuActivo = false;
+                        break;
+                    case ConsoleKey.Escape:
+                        subMenuActivo = false;
+                        break;
+                }
+            }
+        }
+        //--------------------------------------------------------------------------------
+        public List<string> cargarArchivoEnLista(string _ruta)
+        {
+            FileStream _archivo = new FileStream(_ruta, FileMode.Open);
+            List<string> lista = new List<string>();
+            using (StreamReader reader = new StreamReader(_archivo))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string linea = reader.ReadLine();
+                    lista.Add(linea);
+                }
+            }
+            return lista;
+        }
+        public void cargarListaEnArchivo(List<string> _lista)
+        {
+            FileStream archivo = new FileStream("listaClientes.txt", FileMode.Create);
+
+            using (StreamWriter writer = new StreamWriter(archivo))
+            {
+                foreach (string item in _lista)
+                {
+                    writer.WriteLine(item);
+                }
+            }
+        }
     }
 }

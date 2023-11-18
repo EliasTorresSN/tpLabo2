@@ -16,7 +16,7 @@ namespace FinalLaboratorioII.utilidades
 
 
         public void menu()
-        {
+        {   ServicioCliente sc =    new ServicioCliente();
             ServicioVehiculo sv = new ServicioVehiculo();
             ServicioLocalidad sl = new ServicioLocalidad();
             ServicioMarca sm = new ServicioMarca();
@@ -54,7 +54,7 @@ namespace FinalLaboratorioII.utilidades
 
                         if (opcionElegida == 0)
                         {
-
+                            sc.menuClientes();
                         }
                         else if (opcionElegida == 1)
                         {
