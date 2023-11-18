@@ -7,8 +7,8 @@ namespace FinalLaboratorioII.entidades
         private int id_venta;
         private int id_Cliente;
         private int id_Vehiculo;
-        private DateTime fecha_compra;
-        private DateTime fecha_entrega;
+        private string fecha_compra;
+        private string fecha_entrega;
         private double subtotal;
         private double iva;
         private double descuento;
@@ -19,7 +19,7 @@ namespace FinalLaboratorioII.entidades
 
         }
 
-        public Venta(int id_venta,int id_Cliente, int id_Vehiculo, DateTime fecha_compra, DateTime fecha_entrega, double subtotal, double iva, double descuento, double total)
+        public Venta(int id_venta,int id_Cliente, int id_Vehiculo, string fecha_compra, string fecha_entrega, double subtotal, double iva, double descuento, double total)
         {
             this.Id_venta = id_venta;
             this.Id_Cliente = id_Cliente;
@@ -46,13 +46,13 @@ namespace FinalLaboratorioII.entidades
             get { return this.id_Cliente; }
             set { this.id_Cliente = value; }
         }
-        public DateTime Fecha_compra
+        public string Fecha_compra
         {
             get { return this.fecha_compra; }
             set { this.fecha_compra = value; }
 
         }
-        public DateTime Fecha_entrega
+        public string Fecha_entrega
         {
             get { return this.fecha_entrega; }
             set { this.Fecha_entrega = value; }
