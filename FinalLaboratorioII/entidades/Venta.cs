@@ -4,32 +4,38 @@ namespace FinalLaboratorioII.entidades
 {
     internal class Venta
     {
-        private int id_Cliente { get; set; }
-        private int id_Vehiculo { get; set; }
-        private DateTime fecha_compra { get; set; }
-        private DateTime fecha_entrega { get; set; }
-        private double subtotal { get; set; }
-        private double iva { get; set; }
-        private double descuento { get; set; }
-        private double total { get; set; }
+        private int id_venta;
+        private int id_Cliente;
+        private int id_Vehiculo;
+        private DateTime fecha_compra;
+        private DateTime fecha_entrega;
+        private double subtotal;
+        private double iva;
+        private double descuento;
+        private double total;
 
         public Venta()
         {
 
         }
 
-        public Venta(int id_Cliente, int id_Vehiculo, DateTime fecha_compra, DateTime fecha_entrega, double subtotal, double iva, double descuento, double total)
+        public Venta(int id_venta,int id_Cliente, int id_Vehiculo, DateTime fecha_compra, DateTime fecha_entrega, double subtotal, double iva, double descuento, double total)
         {
-            this.id_Cliente = id_Cliente;
-            this.id_Vehiculo = id_Vehiculo;
-            this.fecha_compra = fecha_compra;
-            this.fecha_entrega = fecha_entrega;
-            this.subtotal = subtotal;
-            this.iva = iva;
-            this.descuento = descuento;
-            this.total = total;
+            this.Id_venta = id_venta;
+            this.Id_Cliente = id_Cliente;
+            this.Id_Vehiculo = id_Vehiculo;
+            this.Fecha_compra = fecha_compra;
+            this.Fecha_entrega = fecha_entrega;
+            this.Subtotal = subtotal;
+            this.Iva = iva;
+            this.Descuento = descuento;
+            this.Total = total;
         }
-
+        public int Id_venta
+        {
+            get { return this.id_venta; }
+            set { this.id_venta = value; }
+        }
         public int Id_Vehiculo
         {
             get { return this.id_Vehiculo; }
@@ -72,6 +78,11 @@ namespace FinalLaboratorioII.entidades
         {
             get { return this.total; }
             set { this.total = value; }
+        }
+
+        public override string ToString()
+        {
+            return $"ID VENTA: {this.Id_venta} ID CLIENTE: {this.Id_Cliente}  ID_VEHICULO: {this.Id_Vehiculo} FECHACOMPRA: {this.Fecha_compra} FECHAENTREGA: {this.Fecha_entrega} SUBTOTAL:{this.Subtotal} IVA DESCUENTO:{this.Descuento} TOTAL: {this.Total}";
         }
     }
 }

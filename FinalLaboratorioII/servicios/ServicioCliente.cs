@@ -110,14 +110,16 @@ namespace FinalLaboratorioII.servicios
                 }
             } while (!valido);
 
-                     
+            Console.Clear();
+
             Console.WriteLine("Ingrese domicilio del cliente: ");
             cliente.Domicilio = Console.ReadLine();
+            Console.Clear();
 
             Console.WriteLine("Ingrese localidad del cliente: ");
-            Console.Clear();
             int loc = mostrarMenuInteractivo(listaLocalidades);
             cliente.Id_localidad = loc;
+            Console.Clear();
 
 
             do
@@ -131,10 +133,12 @@ namespace FinalLaboratorioII.servicios
                     cliente.Telefono = tel;
                 }
             } while (!valido);
-            
+
+            Console.Clear();
 
             Console.WriteLine("Ingrese correo electrónico:");
             cliente.Correo = Console.ReadLine();
+
 
             return cliente;
 
