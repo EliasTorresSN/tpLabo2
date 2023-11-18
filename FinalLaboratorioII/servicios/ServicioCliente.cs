@@ -77,7 +77,7 @@ namespace FinalLaboratorioII.servicios
 
 
         }
-
+        //---------------------------------------------------------------------------------
         public Cliente crearCliente(List<Cliente> _clientes)
         {
             bool valido;
@@ -140,70 +140,6 @@ namespace FinalLaboratorioII.servicios
 
 
         }
-
-
-
-        public List<Cliente> eliminarCliente(Cliente _cliente, List<Cliente> _clientes)
-        {
-            _clientes.Remove(_cliente);
-            Console.WriteLine("ÍTEM ELIMINADO");
-            Console.ReadKey();
-            return _clientes;
-        }
-
-
-        public void actualizarCLiente(Cliente c)
-        {
-            List<string> lista = new List<string>(){ "Nombre", "Cuit", "Domicilio", "Localidad", "Teléfono", "Correo","Salir" };
-            Console.WriteLine("Elija que modificar");
-            int atributo = mostrarMenuInteractivo(lista);
-            switch(atributo)
-            {
-                case 0:
-                    Console.WriteLine($"Nombre actual: {c.NombreCliente}");
-                    Console.Write("Ingrese nuevo nombre ->");
-                    c.NombreCliente = Console.ReadLine();
-                
-                break;
-                case 1:
-                    Console.WriteLine($"C.U.I.T. actual: {c.Cuit}");
-                    Console.Write("Ingrese nuevo C.U.I.T. ->");
-                    c.Cuit = Console.ReadLine(); ;
-                break;
-                case 2:
-                    Console.WriteLine($"Domicilio actual: {c.Domicilio}");
-                    Console.Write("Ingrese nuevo domicilio ->");
-                    c.Domicilio = Console.ReadLine(); ;
-                break;
-                case 3:
-                    Console.WriteLine($"Localidad actual: {c.Id_localidad}");
-                    Console.Write("Ingrese nueva localidad ->");
-                    c.Id_localidad = int.Parse(Console.ReadLine()); 
-                break;
-                case 4:
-                    Console.WriteLine($"Teléfono actual: {c.Telefono}");
-                    Console.Write("Ingrese nuevo teléfono ->");
-                    c.Telefono = Console.ReadLine(); ;
-                break;
-                case 5:
-                    Console.WriteLine($"Correo actual: {c.Correo}");
-                    Console.Write("Ingrese nuevo correo ->");
-                    c.Correo = Console.ReadLine(); ;
-                break;
-                case 6:
-                    Console.WriteLine("Saliendo sin modificar datos");
-                    Console.ReadKey();
-                break;
-
-            }
-            if (atributo != 6)
-            {
-                Console.Clear();
-                Console.WriteLine("Datos actualizados con éxito");  
-            }
-        }
-
-
         public void mostrarClientes(List<Cliente> _lista)
         {
             Menu menu = new Menu();
@@ -256,30 +192,27 @@ namespace FinalLaboratorioII.servicios
             }
             Console.ReadKey();
         }
-
-
-
-        public int mostrarMenuInteractivo(List<string> _lista)
+        public Cliente  actualizarCliente(Cliente _cliente, List<Cliente> _lista)
         {
-            Console.Clear();
-            List<string> lista = _lista;
+            string[] atributos = { "Nombre", "Cuit", "Domicilio", "Localidad", "Teléfono", "Correo", "Salir" };
+            int c = 0;
+            bool valido = false;
+
             Console.CursorVisible = false;
             int opcionElegida = 0;
-            var res = 0;
 
             while (true)
             {
                 Console.Clear();
-
-                for (int i = 0; i < lista.Count; i++)
+                Console.WriteLine("ATRIBUTO A MODIFICAR");
+                for (int i = 0; i < atributos.Length; i++)
                 {
-
                     if (i == opcionElegida)
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
                     }
-                    Console.WriteLine(lista[i]);
+                    Console.WriteLine(atributos[i]);
                     Console.ResetColor();
                 }
 
@@ -291,15 +224,79 @@ namespace FinalLaboratorioII.servicios
                         opcionElegida = Math.Max(0, opcionElegida - 1);
                         break;
                     case ConsoleKey.DownArrow:
-                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
+                        opcionElegida = Math.Min(atributos.Length - 1, opcionElegida + 1);
                         break;
                     case ConsoleKey.Enter:
-                        res = opcionElegida;
-                        return res;
+
+                        List<string> lista = new List<string>() { "Nombre", "Cuit", "Domicilio", "Localidad", "Teléfono", "Correo", "Salir" };
+                        Console.WriteLine("Elija que modificar");
+                        int atributo = mostrarMenuInteractivo(lista);
+                        switch (atributo)
+                        {
+                            case 0:
+                                Console.Write("Ingrese nuevo nombre ->");
+                                _cliente.NombreCliente = Console.ReadLine();
+
+                                break;
+                            case 1:
+                                do
+                                {
+                                    Console.WriteLine("Ingrese C.U.I.T.: ");
+                                    string cuit = Console.ReadLine();
+                                    valido = validarNumeros(cuit);
+                                    if (valido)
+                                    {
+                                        _cliente.Cuit = cuit;
+
+                                    }
+                                } while (!valido);
+                                break;
+                            case 2:
+                                Console.Write("Ingrese nuevo domicilio ->");
+                                _cliente.Domicilio = Console.ReadLine(); ;
+                                break;
+                            case 3:
+                                Console.Write("Ingrese nueva localidad ->");
+                                _cliente.Id_localidad = int.Parse(Console.ReadLine());
+                                break;
+                            case 4:
+                                do
+                                {
+                                    Console.WriteLine("Ingrese telefono:");
+                                    string tel = Console.ReadLine();
+                                    valido = validarNumeros(tel);
+                                    if (valido)
+                                    {
+                                        _cliente.Telefono = tel;
+                                    }
+                                } while (!valido);
+                                break;
+                            case 5:
+                                Console.Write("Ingrese nuevo correo ->");
+                                _cliente.Correo = Console.ReadLine(); ;
+                                break;
+                            case 6:
+                                Console.WriteLine("Saliendo sin modificar datos");
+                                Console.ReadKey();
+                                break;
+
+                        }
+                        if (atributo != 6)
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Datos actualizados con éxito");
+                        }
+                        Console.ReadKey();
+                        return _cliente;
                 }
             }
-
-            
+        }
+        public List<Cliente> eliminarCliente(Cliente _cliente, List<Cliente> _clientes)
+        {
+            _clientes.Remove(_cliente);
+            Console.WriteLine("ÍTEM ELIMINADO");
+            Console.ReadKey();
+            return _clientes;
         }
         //---------------------------------------------------------------------------------
         public List<Cliente> convertirListaACliente(List<string> lista)
@@ -364,8 +361,51 @@ namespace FinalLaboratorioII.servicios
             }
             return true;
         }
+        public int mostrarMenuInteractivo(List<string> _lista)
+        {
+            Console.Clear();
+            List<string> lista = _lista;
+            Console.CursorVisible = false;
+            int opcionElegida = 0;
+            var res = 0;
+
+            while (true)
+            {
+                Console.Clear();
+
+                for (int i = 0; i < lista.Count; i++)
+                {
+
+                    if (i == opcionElegida)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
+                    }
+                    Console.WriteLine(lista[i]);
+                    Console.ResetColor();
+                }
+
+                var key = Console.ReadKey().Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionElegida = Math.Max(0, opcionElegida - 1);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionElegida = Math.Min(lista.Count - 1, opcionElegida + 1);
+                        break;
+                    case ConsoleKey.Enter:
+                        res = opcionElegida;
+                        return res;
+                }
+            }
+
+            
+        }
         public void subMenu(List<Cliente> _lista, int _opcionElegida)
         {
+            Menu menu = new Menu();
             bool subMenuActivo = true;
             int opcionSubMenu = 0;
             string[] opciones = { "MODIFICAR ÍTEM", "ELIMINAR ÍTEM" };
@@ -384,7 +424,6 @@ namespace FinalLaboratorioII.servicios
                     Console.WriteLine(opciones[i]);
                     Console.ResetColor();
                 }
-
 
                 var subMenuKey = Console.ReadKey().Key;
 
@@ -406,10 +445,12 @@ namespace FinalLaboratorioII.servicios
                                 Cliente aux = actualizarCliente(c, _lista);
                                 _lista[_opcionElegida] = aux;
                                 cargarListaEnArchivo(listaClienteAString(_lista));
+                                menu.menu();
                                 break;
                             case 1:
                                 _lista = eliminarCliente(c, _lista);
                                 cargarListaEnArchivo(listaClienteAString(_lista));
+                                menu.menu();
                                 break;
                         }
                         subMenuActivo = false;
